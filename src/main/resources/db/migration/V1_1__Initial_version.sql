@@ -21,7 +21,7 @@ CREATE TABLE "item" (
   "description" varchar(250),
   "name" varchar(100) NOT NULL,
   "inventarNumber" varchar(250) NOT NULL UNIQUE,
-  "cost" money,
+  "cost" numeric(19,2),
   CONSTRAINT item_pk PRIMARY KEY ("id")
 ) WITH (
 OIDS=FALSE
