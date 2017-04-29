@@ -11,7 +11,7 @@ OIDS=FALSE
 
 
 
-CREATE TABLE "Item" (
+CREATE TABLE "item" (
   "id" serial NOT NULL,
   "category" int,
   "place" bigint NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE "Item" (
   "name" varchar(100) NOT NULL,
   "inventarNumber" varchar(250) NOT NULL UNIQUE,
   "cost" money,
-  CONSTRAINT Item_pk PRIMARY KEY ("id")
+  CONSTRAINT item_pk PRIMARY KEY ("id")
 ) WITH (
 OIDS=FALSE
 );
@@ -83,9 +83,9 @@ OIDS=FALSE
 
 
 
-ALTER TABLE "Item" ADD CONSTRAINT "Item_fk0" FOREIGN KEY ("category") REFERENCES "category"("id");
-ALTER TABLE "Item" ADD CONSTRAINT "Item_fk1" FOREIGN KEY ("place") REFERENCES "place"("id");
-ALTER TABLE "Item" ADD CONSTRAINT "Item_fk2" FOREIGN KEY ("responsiblePerson") REFERENCES "person"("id");
+ALTER TABLE "item" ADD CONSTRAINT "item_fk0" FOREIGN KEY ("category") REFERENCES "category"("id");
+ALTER TABLE "item" ADD CONSTRAINT "item_fk1" FOREIGN KEY ("place") REFERENCES "place"("id");
+ALTER TABLE "item" ADD CONSTRAINT "item_fk2" FOREIGN KEY ("responsiblePerson") REFERENCES "person"("id");
 
 
 
@@ -93,5 +93,4 @@ ALTER TABLE "personRoles" ADD CONSTRAINT "personRoles_fk0" FOREIGN KEY ("personI
 ALTER TABLE "personRoles" ADD CONSTRAINT "personRoles_fk1" FOREIGN KEY ("role") REFERENCES "role"("id");
 
 
-ALTER TABLE "image" ADD CONSTRAINT "image_fk0" FOREIGN KEY ("item_id") REFERENCES "Item"("id");
-
+ALTER TABLE "image" ADD CONSTRAINT "image_fk0" FOREIGN KEY ("item_id") REFERENCES "item"("id");

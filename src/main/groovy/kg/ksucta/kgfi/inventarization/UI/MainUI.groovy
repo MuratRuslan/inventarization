@@ -1,4 +1,4 @@
-package kg.ksucta.kgfi.inventarization.UI
+package kg.ksucta.kgfi.inventarization.ui
 
 import com.vaadin.annotations.Theme
 import com.vaadin.server.VaadinRequest
