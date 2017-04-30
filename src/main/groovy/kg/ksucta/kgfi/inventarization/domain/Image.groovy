@@ -11,7 +11,6 @@ import javax.persistence.OneToMany
 class Image {
     @Id
     Long id;
-    @OneToMany
     Item item;
     String path;
 
