@@ -1,15 +1,16 @@
 package kg.ksucta.kgfi.inventarization.domain
 
-import javax.persistence.Entity
-import javax.persistence.Id
+import javax.persistence.*
 
-/**
- * Created by dronk_000 on 29.04.2017.
- */
 @Entity
+@Table(name = "IMAGE")
 class Image {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @ManyToOne(cascade =CascadeType.ALL)
+    @JoinColumn(name = "ITEM_ID")
     Item item;
+    @Column(name = "PATH")
     String path;
 }
