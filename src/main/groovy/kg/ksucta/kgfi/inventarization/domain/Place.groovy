@@ -1,22 +1,16 @@
 package kg.ksucta.kgfi.inventarization.domain
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.OneToMany
-import javax.persistence.Table
-
+import javax.persistence.*
 
 @Entity
 @Table(name="PLACE")
 class Place {
     @Id
-    @GeneratedValue
-    Long id;
-    @Column()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    @Column(nullable = false)
     String name;
     String description;
     @OneToMany(mappedBy = "place")
-    List<Item>items;
+    List<Item> items;
 }

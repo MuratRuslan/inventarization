@@ -1,30 +1,23 @@
 package kg.ksucta.kgfi.inventarization.domain
 
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import javax.persistence.*
 
-/**
- * Created by dronk_000 on 29.04.2017.
- */
 @Entity
 class Item {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "CATEGORY")
+    @JoinColumn(name = "category")
     Category category;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PLACE")
+    @JoinColumn(name = "place",nullable = false)
     Place place;
 
+    @ManyToOne()
+    @JoinColumn(name="responsiblePerson")
     Person responsiblePerson;
     Date purchaseDate;
     Date registrationDate;
@@ -33,6 +26,6 @@ class Item {
     String inventarNumber;
     BigDecimal cost;
 
-    @OneToMany(mappedBy = "image")
+    @OneToMany(mappedBy = "item",targetEntity = Image.class)
     List<Image> images;
 }

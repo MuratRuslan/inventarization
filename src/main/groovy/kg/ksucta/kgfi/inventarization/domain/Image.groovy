@@ -1,20 +1,12 @@
 package kg.ksucta.kgfi.inventarization.domain
 
-import javax.persistence.CascadeType
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.Table
-
+import javax.persistence.*
 
 @Entity
-@Table(name = "IMAGE")
+@Table(name = "image")
 class Image {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @ManyToOne(cascade =CascadeType.ALL)
     @JoinColumn(name = "ITEM_ID")
