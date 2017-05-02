@@ -25,6 +25,7 @@
 		<vaadin.version>8.0.5</vaadin.version>
 		<groovy.version>2.4.10</groovy.version>
 		<flyway.version>4.2.0</flyway.version>
+		<pdfBox.version>2.0.5</pdfBox.version>
 	</properties>
 
 	<dependencies>
@@ -66,6 +67,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>${pdfBox.version}</version>
 		</dependency>
 	</dependencies>
 
