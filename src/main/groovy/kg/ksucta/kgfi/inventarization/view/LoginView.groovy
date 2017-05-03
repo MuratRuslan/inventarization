@@ -15,8 +15,7 @@ import javax.annotation.PostConstruct
 /**
  * Created by dronk_000 on 29.04.2017.
  */
-@SpringComponent
-@UIScope
+@Component
 class LoginView extends VerticalLayout implements View {
     final static String NAME = "LoginView"
 
