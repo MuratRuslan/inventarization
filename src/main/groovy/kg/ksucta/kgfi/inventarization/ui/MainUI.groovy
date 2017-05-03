@@ -19,7 +19,7 @@ class MainUI extends UI{
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-
+        setContent(loginView)
     }
 
 
