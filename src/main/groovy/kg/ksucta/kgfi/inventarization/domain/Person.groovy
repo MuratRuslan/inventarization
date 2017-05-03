@@ -20,10 +20,10 @@ class Person {
     @Column(nullable = false)
     String password;
 
-    @Enumerated(EnumType.STRING)
-    @JoinColumn(name ="role")
+    @JoinColumn(name = "role")
+    @ManyToOne(targetEntity = Role.class)
     Role role;
 
-    @OneToMany(mappedBy = "responsiblePerson",targetEntity = Item.class)
+    @OneToMany(mappedBy = "responsiblePerson", targetEntity = Item.class)
     List<Item> items;
 }

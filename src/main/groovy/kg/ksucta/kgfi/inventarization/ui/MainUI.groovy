@@ -7,9 +7,6 @@ import com.vaadin.ui.UI
 import kg.ksucta.kgfi.inventarization.view.LoginView
 import org.springframework.beans.factory.annotation.Autowired
 
-/**
- * Created by murat on 4/28/17.
- */
 @SpringUI(path="/")
 @Theme("valo")
 class MainUI extends UI{

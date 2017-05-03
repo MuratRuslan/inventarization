@@ -13,5 +13,4 @@ abstract class AbstractExportToDocumentService<T> implements ExportToDocumentSer
         this.collection = collection
     }
 
-
 }

@@ -1,13 +1,18 @@
 package kg.ksucta.kgfi.inventarization.service.impl.export
 
-import kg.ksucta.kgfi.inventarization.service.ExportToDocumentService
+class DefaultCsvExportService extends AbstractExportToDocumentService {
 
-/**
- * Created by dronk_000 on 01.05.2017.
- */
-class DefaultCsvExportService implements ExportToDocumentService {
+    final String NEW_LINE_SEPARATOR = "\n";
+    final String COMMA_DELIMETER = ",";
+
+    DefaultCsvExportService(Collection collection) {
+        super(collection)
+    }
+
     @Override
     void exportToOutputStream(OutputStream outputStream) {
 
+        outputStream.flush()
+        outputStream.close()
     }
 }

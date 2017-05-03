@@ -2,6 +2,7 @@ CREATE TABLE "person" (
   "id" BIGINT NOT NULL,
   "name" varchar(100) NOT NULL,
   "lastname" varchar(100) NOT NULL,
+  "role" VARCHAR(100) NOT NULL ,
   "login" varchar(100) UNIQUE,
   "password" varchar(50),
   CONSTRAINT person_pk PRIMARY KEY ("id")
@@ -9,7 +10,14 @@ CREATE TABLE "person" (
 OIDS=FALSE
 );
 
-
+CREATE TABLE "role" (
+  "id" BIGINT NOT NULL,
+  "name" varchar(100) NOT NULL,
+  "description" varchar(100) ,
+  CONSTRAINT person_pk PRIMARY KEY ("id")
+) WITH (
+OIDS=FALSE
+);
 
 CREATE TABLE "item" (
   "id" BIGINT NOT NULL,
@@ -48,27 +56,6 @@ CREATE TABLE "place" (
 ) WITH (
 OIDS=FALSE
 );
-
-
-
-CREATE TABLE "person_roles" (
-  "person_id" bigint NOT NULL,
-  "role" int NOT NULL
-) WITH (
-OIDS=FALSE
-);
-
-
-
-CREATE TABLE "role" (
-  "id" serial NOT NULL,
-  "name" varchar(100) NOT NULL UNIQUE,
-  "description" varchar(250),
-  CONSTRAINT role_pk PRIMARY KEY ("id")
-) WITH (
-OIDS=FALSE
-);
-
 
 
 CREATE TABLE "image" (

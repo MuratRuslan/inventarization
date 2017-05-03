@@ -74,7 +74,9 @@
 			<artifactId>pdfbox</artifactId>
 			<version>${pdfBox.version}</version>
 		</dependency>
-	</dependencies>
+
+    </dependencies>
+
 
 	<dependencyManagement>
 		<dependencies>
