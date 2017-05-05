@@ -7,7 +7,7 @@ import kg.ksucta.kgfi.inventarization.domain.Person
  * Created by dronk_000 on 03.05.2017.
  */
 interface FormatUtil {
-    String formatPersonCollection(Collection<Person> collection)
+    String formatPerson(Person person)
 
-    String formatItemCollection(Collection<Item> collection)
+    String formatItem(Item item)
 }
