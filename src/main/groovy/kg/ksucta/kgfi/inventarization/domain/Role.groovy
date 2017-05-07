@@ -3,7 +3,6 @@ package kg.ksucta.kgfi.inventarization.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "ROLE")
 class Role{
 
     @Id
@@ -15,6 +14,4 @@ class Role{
 
     String description;
 
-    @ManyToMany(mappedBy = "roles")
-    List<Person> persons;
 }
