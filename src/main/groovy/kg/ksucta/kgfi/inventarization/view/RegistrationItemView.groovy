@@ -9,6 +9,7 @@ import com.vaadin.ui.ComboBox
 import com.vaadin.ui.DateField
 import com.vaadin.ui.Label
 import com.vaadin.ui.NativeSelect
+import com.vaadin.ui.Notification
 import com.vaadin.ui.TextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
@@ -69,7 +70,16 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save")
-        save.addClickListener({ saveItem() })
+        save.addClickListener({
+            try {
+                saveItem()
+                Notification.show("Success")
+            } catch (NullPointerException e) {
+                Notification.show("fields should be filled", Notification.Type.WARNING_MESSAGE)
+            } catch (NumberFormatException e) {
+                Notification.show("Number given not correct", Notification.Type.WARNING_MESSAGE)
+            }
+        })
 
 
         addComponents(header, itemNumber, name, category, place, cost,
@@ -85,7 +95,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
     }
 
     @Transactional
-    boolean saveItem() {
+    boolean saveItem() throws NumberFormatException, NullPointerException {
         Item item = [name            : name.value,
                      inventarNumber  : itemNumber.value,
                      category        : category.value,
@@ -95,6 +105,9 @@ public class RegistrationItemView extends VerticalLayout implements View {
                      registrationDate: java.sql.Date.valueOf(registrationDate.value),
                      description     : itemDescription.value]
         itemService.saveItem(item)
+        getUI().navigator.navigateTo(this.NAME)
+        true
     }
+
 }
 
