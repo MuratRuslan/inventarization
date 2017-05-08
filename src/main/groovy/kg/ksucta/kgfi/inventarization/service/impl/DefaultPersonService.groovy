@@ -26,6 +26,11 @@ class DefaultPersonService implements PersonService {
     }
 
     @Override
+    void savePerson(Person person) {
+        personRepository.save(person)
+    }
+
+    @Override
     Set<Person> getPersonByLastname(String lastname) {
         personRepository.findByLastname()
     }
