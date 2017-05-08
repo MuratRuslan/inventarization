@@ -5,13 +5,16 @@ import com.vaadin.navigator.ViewChangeListener
 import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
+import com.vaadin.ui.ComboBox
 import com.vaadin.ui.DateField
 import com.vaadin.ui.Label
 import com.vaadin.ui.NativeSelect
 import com.vaadin.ui.TextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.VerticalLayout
+import kg.ksucta.kgfi.inventarization.domain.Category
 import kg.ksucta.kgfi.inventarization.domain.Item
+import kg.ksucta.kgfi.inventarization.domain.Place
 import kg.ksucta.kgfi.inventarization.service.CategoryService
 import kg.ksucta.kgfi.inventarization.service.ItemService
 import kg.ksucta.kgfi.inventarization.service.PersonService
@@ -27,15 +30,15 @@ import java.time.LocalDate
  * Created by murat on 5/8/17.
  */
 @SpringView(name = RegistrationItemView.NAME)
-public class RegistrationItemView extends VerticalLayout implements View{
+public class RegistrationItemView extends VerticalLayout implements View {
 
     final static String NAME = "RegistrationItemView ";
     Label header;
     TextField itemNumber;
     TextField name;
     TextField cost;
-    NativeSelect<String> category;
-    NativeSelect<String> place;
+    NativeSelect<Category> category;
+    ComboBox<Place> place;
     DateField purchaseDate;
     DateField registrationDate;
     TextArea itemDescription;
@@ -58,15 +61,15 @@ public class RegistrationItemView extends VerticalLayout implements View{
         itemNumber = new TextField("Item number");
         name = new TextField("Name");
         category = new NativeSelect<>("Choose category");
-        place = new NativeSelect<>("Place");
+        place = new ComboBox<>();
         cost = new TextField("Cost");
 
         purchaseDate = new DateField("Purchase date");
-        registrationDate =new DateField("Registration date");
+        registrationDate = new DateField("Registration date");
 
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save")
-        save.addClickListener({saveItem()})
+        save.addClickListener({ saveItem() })
 
 
         addComponents(header, itemNumber, name, category, place, cost,
@@ -77,18 +80,20 @@ public class RegistrationItemView extends VerticalLayout implements View{
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        category.setItems(categoryService.all.collect({it.name}))
-        place.setItems(placeService.all.collect({it.name}))
+        category.setItems(categoryService.all)
+        place.setItems(placeService.all)
     }
 
     @Transactional
     boolean saveItem() {
-        Item item = [name: name.value, inventarNumber: itemNumber.value,
-                       category: categoryService.getByName(category.value),
-                        place: placeService.getByName(place.value),
-                        cost: cost.value as BigDecimal, purchaseDate: purchaseDate.value,
-                        registrationDate: registrationDate.value as Date,
-                        description: itemDescription.value as Date]
+        Item item = [name            : name.value,
+                     inventarNumber  : itemNumber.value,
+                     category        : category.value,
+                     place           : place.value,
+                     cost            : cost.value as BigDecimal,
+                     purchaseDate    : java.sql.Date.valueOf(purchaseDate.value),
+                     registrationDate: java.sql.Date.valueOf(registrationDate.value),
+                     description     : itemDescription.value]
         itemService.saveItem(item)
     }
 }

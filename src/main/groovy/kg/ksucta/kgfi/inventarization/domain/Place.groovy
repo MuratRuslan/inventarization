@@ -11,4 +11,9 @@ class Place {
     @Column(nullable = false)
     String name;
     String description;
+
+    @Override
+    String toString() {
+        name
+    }
 }
