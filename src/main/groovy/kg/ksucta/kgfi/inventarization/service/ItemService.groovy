@@ -22,4 +22,5 @@ interface ItemService {
     List<Item> getItemsByCostMoreExpensiveThan(BigDecimal cost)
     List<Item> getItemsByCostCheaperThan(BigDecimal cost)
     List<Item> getAll()
+    void saveItem(Item item)
 }

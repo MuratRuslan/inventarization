@@ -77,4 +77,8 @@ class DefaultItemService implements ItemService {
     List<Item> getAll() {
         itemRepository.findAll()
     }
+    @Override
+    void saveItem(Item item) {
+        itemRepository.save(item)
+    }
 }
