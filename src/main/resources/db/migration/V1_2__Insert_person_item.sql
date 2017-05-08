@@ -29,4 +29,5 @@ INSERT INTO role VALUES (3, 'ROLE_OPERATOR', NULL);
 INSERT INTO person_roles VALUES (1, 1);
 INSERT INTO person_roles VALUES (1, 2);
 INSERT INTO person_roles VALUES (1, 3);
+INSERT INTO person_roles VALUES (2, 2);
 

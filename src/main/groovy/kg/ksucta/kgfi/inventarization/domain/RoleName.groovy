@@ -5,4 +5,8 @@ package kg.ksucta.kgfi.inventarization.domain
  */
 enum RoleName {
     ROLE_ADMIN, ROLE_OPERATOR, ROLE_USER
+
+    String getName() {
+        this.name
+    }
 }
