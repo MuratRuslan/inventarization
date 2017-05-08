@@ -11,6 +11,7 @@ import com.vaadin.ui.themes.ValoTheme
 import kg.ksucta.kgfi.inventarization.view.AdminView
 import kg.ksucta.kgfi.inventarization.view.DefaultView
 import kg.ksucta.kgfi.inventarization.view.LoginView
+import kg.ksucta.kgfi.inventarization.view.RegistrationItemView
 
 /**
  * Created by murat on 4/28/17.
@@ -34,6 +35,7 @@ class MainUI extends UI implements ViewDisplay {
                 DefaultView.NAME));
         navigationBar.addComponent(createNavigationButton("LoginView", LoginView.NAME));
         navigationBar.addComponent(createNavigationButton("AdminView", AdminView.NAME));
+        navigationBar.addComponent(createNavigationButton("Item Registration", RegistrationItemView.NAME))
         root.addComponent(navigationBar);
 
         springViewDisplay = new Panel();
