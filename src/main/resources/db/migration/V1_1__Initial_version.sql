@@ -1,5 +1,5 @@
 CREATE TABLE "person" (
-  "id" BIGINT NOT NULL,
+  "id" BIGSERIAL NOT NULL,
   "name" varchar(100) NOT NULL,
   "lastname" varchar(100) NOT NULL,
   "login" varchar(100) UNIQUE,
@@ -12,7 +12,7 @@ OIDS=FALSE
 
 
 CREATE TABLE "item" (
-  "id" BIGINT NOT NULL,
+  "id" BIGSERIAL NOT NULL,
   "category" int,
   "place" SERIAL NOT NULL,
   "purchase_date" timestamp,
@@ -72,7 +72,7 @@ OIDS=FALSE
 
 
 CREATE TABLE "image" (
-  "id" BIGINT NOT NULL,
+  "id" BIGSERIAL NOT NULL,
   "path" varchar,
   "item_id" bigint,
   CONSTRAINT image_pk PRIMARY KEY ("id")
