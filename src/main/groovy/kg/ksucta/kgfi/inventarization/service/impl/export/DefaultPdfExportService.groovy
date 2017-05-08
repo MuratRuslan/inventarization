@@ -16,7 +16,7 @@ class DefaultPdfExportService<T> extends AbstractExportToDocumentService<T> {
     }
 
     @Override
-    void exportToOutputStream(OutputStream outputStream) {
+    void export(OutputStream outputStream) {
         // Create a document and add a page to it
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();

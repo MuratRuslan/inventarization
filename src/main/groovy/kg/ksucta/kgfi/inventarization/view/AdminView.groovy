@@ -5,8 +5,6 @@ import com.vaadin.navigator.ViewChangeListener
 import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
-import kg.ksucta.kgfi.inventarization.domain.RoleName
-import org.springframework.security.access.annotation.Secured
 
 /**
  * Created by dronk_000 on 05.05.2017.

@@ -7,7 +7,7 @@ import kg.ksucta.kgfi.inventarization.service.ExportToDocumentService
  */
 class DefaultCsvExportService implements ExportToDocumentService {
     @Override
-    void exportToOutputStream(OutputStream outputStream) {
+    void export(OutputStream outputStream) {
 
     }
 }

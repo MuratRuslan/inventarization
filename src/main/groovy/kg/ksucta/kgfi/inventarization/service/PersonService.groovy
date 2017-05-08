@@ -13,4 +13,5 @@ interface PersonService {
     Set<Person> getPersonByLastname(String lastname)
     Set<Person> getPersonByNameAndLastname(String name, String lastname)
     Person getPersonByLogin(String login)
+    Set<Person> getAll()
 }

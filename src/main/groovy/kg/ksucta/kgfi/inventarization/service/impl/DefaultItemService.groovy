@@ -7,10 +7,12 @@ import kg.ksucta.kgfi.inventarization.repository.ItemRepository
 import kg.ksucta.kgfi.inventarization.repository.PersonRepository
 import kg.ksucta.kgfi.inventarization.service.ItemService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
 /**
  * Created by dronk_000 on 30.04.2017.
  */
+@Service
 class DefaultItemService implements ItemService {
 
     @Autowired
@@ -69,5 +71,10 @@ class DefaultItemService implements ItemService {
     @Override
     List<Item> getItemsByCostCheaperThan(BigDecimal cost) {
         itemRepository.findByCostLessThanEqual(cost)
+    }
+
+    @Override
+    List<Item> getAll() {
+        itemRepository.findAll()
     }
 }

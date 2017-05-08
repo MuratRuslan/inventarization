@@ -4,10 +4,12 @@ import kg.ksucta.kgfi.inventarization.domain.Person
 import kg.ksucta.kgfi.inventarization.repository.PersonRepository
 import kg.ksucta.kgfi.inventarization.service.PersonService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
 /**
  * Created by dronk_000 on 30.04.2017.
  */
+@Service
 class DefaultPersonService implements PersonService {
 
     @Autowired
@@ -36,5 +38,10 @@ class DefaultPersonService implements PersonService {
     @Override
     Person getPersonByLogin(String login) {
         personRepository.findByLogin(login)
+    }
+
+    @Override
+    Set<Person> getAll() {
+        personRepository.findAll()
     }
 }
