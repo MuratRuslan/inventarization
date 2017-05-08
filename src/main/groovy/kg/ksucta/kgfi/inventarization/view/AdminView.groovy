@@ -10,6 +10,7 @@ import com.vaadin.ui.VerticalLayout
  * Created by dronk_000 on 05.05.2017.
  */
 @SpringView(name = AdminView.NAME)
+
 class AdminView extends VerticalLayout implements View {
     static final String NAME = "AdminView"
 

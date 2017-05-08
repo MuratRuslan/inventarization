@@ -6,25 +6,19 @@ import com.vaadin.navigator.ViewDisplay
 import com.vaadin.server.VaadinRequest
 import com.vaadin.spring.annotation.SpringUI
 import com.vaadin.spring.annotation.SpringViewDisplay
-import com.vaadin.ui.Button
-import com.vaadin.ui.Component
-import com.vaadin.ui.CssLayout
-import com.vaadin.ui.Panel
-import com.vaadin.ui.UI
-import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.*
 import com.vaadin.ui.themes.ValoTheme
 import kg.ksucta.kgfi.inventarization.view.AdminView
 import kg.ksucta.kgfi.inventarization.view.DefaultView
 import kg.ksucta.kgfi.inventarization.view.LoginView
-import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * Created by murat on 4/28/17.
  */
 @Theme("valo")
-@SpringUI
+@SpringUI(path='/')
 @SpringViewDisplay
-class MainUI extends UI implements ViewDisplay{
+class MainUI extends UI implements ViewDisplay {
 
     private Panel springViewDisplay;
 
@@ -54,7 +48,7 @@ class MainUI extends UI implements ViewDisplay{
         button.addStyleName(ValoTheme.BUTTON_SMALL);
         // If you didn't choose Java 8 when creating the project, convert this
         // to an anonymous listener class
-        button.addClickListener({event -> getUI().getNavigator().navigateTo(viewName)});
+        button.addClickListener({ event -> getUI().getNavigator().navigateTo(viewName) });
         return button;
     }
 

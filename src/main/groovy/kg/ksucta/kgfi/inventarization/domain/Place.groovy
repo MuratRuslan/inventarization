@@ -11,6 +11,4 @@ class Place {
     @Column(nullable = false)
     String name;
     String description;
-    @OneToMany(mappedBy = "place")
-    List<Item> items;
 }

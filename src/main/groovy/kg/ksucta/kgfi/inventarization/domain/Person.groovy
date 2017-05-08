@@ -17,13 +17,12 @@ class Person {
     @Column(unique = true)
     String login;
 
-    @Column(nullable = false)
     String password;
 
-    @JoinColumn(name = "role")
-    @ManyToOne(targetEntity = Role.class)
-    Role role;
-
-    @OneToMany(mappedBy = "responsiblePerson", targetEntity = Item.class)
-    List<Item> items;
+    @ManyToMany
+    @JoinTable(name = "personRoles"
+            , joinColumns = @JoinColumn(name = "personId", referencedColumnName = "id", nullable = false)
+            , inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id", nullable = false)
+    )
+    List<Role> roles;
 }

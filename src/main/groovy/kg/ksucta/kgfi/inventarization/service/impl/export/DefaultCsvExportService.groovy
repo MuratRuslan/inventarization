@@ -10,7 +10,7 @@ class DefaultCsvExportService extends AbstractExportToDocumentService {
     }
 
     @Override
-    void exportToOutputStream(OutputStream outputStream) {
+    void export(OutputStream outputStream) {
 
         outputStream.flush()
         outputStream.close()

@@ -21,4 +21,5 @@ interface ItemService {
     Item getItemByInventarNumber(String inventarNumber)
     List<Item> getItemsByCostMoreExpensiveThan(BigDecimal cost)
     List<Item> getItemsByCostCheaperThan(BigDecimal cost)
+    List<Item> getAll()
 }
