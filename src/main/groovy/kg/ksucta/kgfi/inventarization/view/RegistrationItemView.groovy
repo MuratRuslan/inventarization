@@ -62,11 +62,10 @@ public class RegistrationItemView extends VerticalLayout implements View {
         itemNumber = new TextField("Item number");
         name = new TextField("Name");
         category = new NativeSelect<>("Choose category");
-        place = new ComboBox<>();
+        place = new ComboBox<>("Place");
         cost = new TextField("Cost");
 
         purchaseDate = new DateField("Purchase date");
-        registrationDate = new DateField("Registration date");
 
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save")
@@ -102,11 +101,10 @@ public class RegistrationItemView extends VerticalLayout implements View {
                      place           : place.value,
                      cost            : cost.value as BigDecimal,
                      purchaseDate    : java.sql.Date.valueOf(purchaseDate.value),
-                     registrationDate: java.sql.Date.valueOf(registrationDate.value),
+                     registrationDate: new Date(),
                      description     : itemDescription.value]
         itemService.saveItem(item)
         getUI().navigator.navigateTo(this.NAME)
-        true
     }
 
 }
