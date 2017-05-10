@@ -10,8 +10,9 @@ import com.vaadin.ui.*
 import com.vaadin.ui.themes.ValoTheme
 import kg.ksucta.kgfi.inventarization.view.AdminView
 import kg.ksucta.kgfi.inventarization.view.DefaultView
-import kg.ksucta.kgfi.inventarization.view.LoginView
+
 import kg.ksucta.kgfi.inventarization.view.RegistrationItemView
+import kg.ksucta.kgfi.inventarization.view.SearchItemView
 
 /**
  * Created by murat on 4/28/17.
@@ -21,7 +22,7 @@ import kg.ksucta.kgfi.inventarization.view.RegistrationItemView
 @SpringViewDisplay
 class MainUI extends UI implements ViewDisplay {
 
-    private Panel springViewDisplay;
+    Panel springViewDisplay;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -31,11 +32,10 @@ class MainUI extends UI implements ViewDisplay {
 
         final CssLayout navigationBar = new CssLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-        navigationBar.addComponent(createNavigationButton("DefaultView",
-                DefaultView.NAME));
-        navigationBar.addComponent(createNavigationButton("LoginView", LoginView.NAME));
+        navigationBar.addComponent(createNavigationButton("DefaultView", DefaultView.NAME));
         navigationBar.addComponent(createNavigationButton("AdminView", AdminView.NAME));
         navigationBar.addComponent(createNavigationButton("Item Registration", RegistrationItemView.NAME))
+        navigationBar.addComponent(createNavigationButton('Search item', SearchItemView.NAME))
         root.addComponent(navigationBar);
 
         springViewDisplay = new Panel();
@@ -48,9 +48,8 @@ class MainUI extends UI implements ViewDisplay {
     private Button createNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);
         button.addStyleName(ValoTheme.BUTTON_SMALL);
-        // If you didn't choose Java 8 when creating the project, convert this
-        // to an anonymous listener class
-        button.addClickListener({ event -> getUI().getNavigator().navigateTo(viewName) });
+
+        button.addClickListener({ event -> getNavigator().navigateTo(viewName) });
         return button;
     }
 

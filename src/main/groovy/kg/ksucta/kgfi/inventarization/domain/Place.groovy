@@ -11,4 +11,10 @@ class Place {
     @Column(nullable = false)
     String name;
     String description;
+
+
+    @Override
+    public String toString() {
+        name
+    }
 }

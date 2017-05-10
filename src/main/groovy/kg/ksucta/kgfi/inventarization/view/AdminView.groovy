@@ -12,6 +12,7 @@ import org.springframework.security.access.annotation.Secured
  * Created by dronk_000 on 05.05.2017.
  */
 @SpringView(name = AdminView.NAME)
+@Secured('ROLE_ADMIN')
 class AdminView extends VerticalLayout implements View {
     static final String NAME = "AdminView"
 
