@@ -12,4 +12,9 @@ class Place {
     String name;
     String description;
 
+
+    @Override
+    public String toString() {
+        name
+    }
 }

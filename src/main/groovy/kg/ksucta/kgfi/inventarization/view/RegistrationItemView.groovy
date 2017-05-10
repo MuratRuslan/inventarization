@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.PostConstruct
-import java.time.LocalDate
+
 
 /**
  * Created by murat on 5/8/17.
@@ -61,9 +61,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
         itemNumber = new TextField("Item number");
         name = new TextField("Name");
         category = new NativeSelect<>("Choose category");
-        category.setItemCaptionGenerator(Category.&getName)
         place = new ComboBox<>("Place");
-        place.setItemCaptionGenerator(Place.&getName)
         cost = new TextField("Cost");
         purchaseDate = new DateField("Purchase date");
         itemDescription = new TextArea("Description", "Type here description of the item");

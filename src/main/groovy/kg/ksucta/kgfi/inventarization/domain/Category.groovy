@@ -11,5 +11,10 @@ class Category {
     @Column(nullable = false,unique = true)
     String name;
     String description;
+
+    @Override
+    String toString() {
+        name
+    }
 }
 
