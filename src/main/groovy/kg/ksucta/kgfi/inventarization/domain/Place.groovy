@@ -12,8 +12,4 @@ class Place {
     String name;
     String description;
 
-    @Override
-    String toString() {
-        name
-    }
 }

@@ -41,7 +41,6 @@ public class RegistrationItemView extends VerticalLayout implements View {
     NativeSelect<Category> category;
     ComboBox<Place> place;
     DateField purchaseDate;
-    DateField registrationDate;
     TextArea itemDescription;
     Button save;
 
@@ -62,13 +61,14 @@ public class RegistrationItemView extends VerticalLayout implements View {
         itemNumber = new TextField("Item number");
         name = new TextField("Name");
         category = new NativeSelect<>("Choose category");
+        category.setItemCaptionGenerator(Category.&getName)
         place = new ComboBox<>("Place");
+        place.setItemCaptionGenerator(Place.&getName)
         cost = new TextField("Cost");
-
         purchaseDate = new DateField("Purchase date");
-
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save")
+
         save.addClickListener({
             try {
                 saveItem()
@@ -82,7 +82,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
 
         addComponents(header, itemNumber, name, category, place, cost,
-                purchaseDate, registrationDate, itemDescription, save)
+                purchaseDate, itemDescription, save)
 
     }
 
