@@ -12,6 +12,7 @@ import kg.ksucta.kgfi.inventarization.view.AdminView
 import kg.ksucta.kgfi.inventarization.view.DefaultView
 
 import kg.ksucta.kgfi.inventarization.view.RegistrationItemView
+import kg.ksucta.kgfi.inventarization.view.RegistrationUserView
 import kg.ksucta.kgfi.inventarization.view.SearchItemView
 
 /**
@@ -36,6 +37,7 @@ class MainUI extends UI implements ViewDisplay {
         navigationBar.addComponent(createNavigationButton("AdminView", AdminView.NAME));
         navigationBar.addComponent(createNavigationButton("Item Registration", RegistrationItemView.NAME))
         navigationBar.addComponent(createNavigationButton('Search item', SearchItemView.NAME))
+        navigationBar.addComponent(createNavigationButton('User Registration', RegistrationUserView.NAME))
         root.addComponent(navigationBar);
 
         springViewDisplay = new Panel();

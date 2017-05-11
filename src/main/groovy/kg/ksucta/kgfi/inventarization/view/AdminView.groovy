@@ -4,6 +4,7 @@ import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
 import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.Label
+import com.vaadin.ui.MenuBar
 import com.vaadin.ui.VerticalLayout
 import kg.ksucta.kgfi.inventarization.domain.RoleName
 import org.springframework.security.access.annotation.Secured
@@ -14,10 +15,13 @@ import org.springframework.security.access.annotation.Secured
 @SpringView(name = AdminView.NAME)
 @Secured('ROLE_ADMIN')
 class AdminView extends VerticalLayout implements View {
-    static final String NAME = "AdminView"
+    static final String NAME = "AdminView";
+    MenuBar admin;
 
     public AdminView() {
-        addComponent(new Label("AdminView"))
+        admin = new MenuBar("Select action");
+
+        addComponent(admin);
     }
 
     @Override
