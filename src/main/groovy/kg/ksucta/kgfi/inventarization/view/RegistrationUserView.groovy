@@ -48,7 +48,7 @@ public class RegistrationUserView extends VerticalLayout implements View{
         save = new Button("Save");
 
         save.addClickListener({   try {
-            saveItem();
+            savePerson();
             Notification.show("Success");
         } catch (NullPointerException e) {
             Notification.show("fields should be filled", Notification.Type.WARNING_MESSAGE);
@@ -68,7 +68,7 @@ public class RegistrationUserView extends VerticalLayout implements View{
     }
 
     @Transactional
-    boolean saveItem() throws NumberFormatException, NullPointerException {
+    boolean savePerson() throws NumberFormatException, NullPointerException {
         Person person = [
                 name            : name.value,
                 lastname        : lastname.value,
