@@ -22,7 +22,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Set<Item> findByPurchaseDateBefore(Date date);
     Set<Item> findByPurchaseDateAfter(Date date);
     List<Item> findByName(String name);
-    Item findByInventarNumber(String inventarNumber);
+    Item findByArticleNumber(String inventarNumber);
     List<Item> findByCostGreaterThanEqual(BigDecimal cost);
     List<Item> findByCostLessThanEqual(BigDecimal cost);
 }

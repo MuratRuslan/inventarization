@@ -15,6 +15,8 @@ import kg.ksucta.kgfi.inventarization.service.ItemService;
 import kg.ksucta.kgfi.inventarization.service.PersonService;
 import kg.ksucta.kgfi.inventarization.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.haijian.PdfExporter;
+
 
 import javax.annotation.PostConstruct;
 
@@ -22,9 +24,9 @@ import javax.annotation.PostConstruct;
  * Created by samsung on 10.05.2017.
  */
 @SpringView(name = SearchItemView.NAME)
-class SearchItemView extends VerticalLayout implements View {
+public class SearchItemView extends VerticalLayout implements View {
 
-    final static String NAME = "SearchItemView";
+    public final static String NAME = "SearchItemView";
     private TextField filterTextField;
     private Grid<Item> items;
 
@@ -42,6 +44,7 @@ class SearchItemView extends VerticalLayout implements View {
     private void init() {
         initComponents();
         addComponents(filterTextField, items);
+
     }
 
     @Override
@@ -52,7 +55,7 @@ class SearchItemView extends VerticalLayout implements View {
     void initComponents() {
         items = new Grid<>();
         items.addColumn(Item::getName).setCaption("Item name");
-        items.addColumn(Item::getInventarNumber).setCaption("Article number");
+        items.addColumn(Item::getArticleNumber).setCaption("Article number");
         items.addColumn(Item::getCategory).setCaption("Category");
         items.addColumn(Item::getPlace).setCaption("Place");
         items.addColumn(Item::getCost).setCaption("Cost");
