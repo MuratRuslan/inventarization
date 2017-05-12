@@ -63,16 +63,10 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
         initBinder();
 
-        save.addClickListener(event->{
-        try {
+        save.addClickListener(event -> {
             saveItem();
             Notification.show("Success");
-        } catch (NullPointerException e) {
-            Notification.show("fields should be filled", Notification.Type.WARNING_MESSAGE);
-        } catch (NumberFormatException e) {
-            Notification.show("Number given not correct", Notification.Type.WARNING_MESSAGE);
-        }});
-
+        });
 
         addComponents(header, itemNumber, name, category, place, cost,
                 purchaseDate, itemDescription, save);
@@ -121,7 +115,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
 
     @Transactional
-    void saveItem() throws NumberFormatException, NullPointerException {
+    private void saveItem() {
         Item item = binder.getBean();
         item.setRegistrationDate(new Date());
         itemService.saveItem(item);
