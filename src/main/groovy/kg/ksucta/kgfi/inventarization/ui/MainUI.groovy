@@ -8,6 +8,8 @@ import com.vaadin.spring.annotation.SpringUI
 import com.vaadin.spring.annotation.SpringViewDisplay
 import com.vaadin.ui.*
 import com.vaadin.ui.themes.ValoTheme
+import kg.ksucta.kgfi.inventarization.view.AddCategoryView
+import kg.ksucta.kgfi.inventarization.view.AddPlaceView
 import kg.ksucta.kgfi.inventarization.view.AdminView
 import kg.ksucta.kgfi.inventarization.view.DefaultView
 
@@ -38,6 +40,8 @@ class MainUI extends UI implements ViewDisplay {
         navigationBar.addComponent(createNavigationButton("Item Registration", RegistrationItemView.NAME))
         navigationBar.addComponent(createNavigationButton('Search item', SearchItemView.NAME))
         navigationBar.addComponent(createNavigationButton('User Registration', RegistrationUserView.NAME))
+        navigationBar.addComponent(createNavigationButton('Create category', AddCategoryView.NAME))
+        navigationBar.addComponent(createNavigationButton('Create place', AddPlaceView.NAME))
         root.addComponent(navigationBar);
 
         springViewDisplay = new Panel();
