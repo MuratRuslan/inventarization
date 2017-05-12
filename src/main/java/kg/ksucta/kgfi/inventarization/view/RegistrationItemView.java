@@ -1,5 +1,8 @@
 package kg.ksucta.kgfi.inventarization.view;
 
+import com.vaadin.data.Binder;
+import com.vaadin.data.converter.LocalDateToDateConverter;
+import com.vaadin.data.converter.StringToBigDecimalConverter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.concurrent.atomic.DoubleAccumulator;
 
 /**
  * Created by samsung on 12.05.2017.
@@ -32,6 +36,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
     private DateField purchaseDate;
     private TextArea itemDescription;
     private Button save;
+    private Binder<Item> binder;
 
 
     @Autowired
@@ -56,6 +61,8 @@ public class RegistrationItemView extends VerticalLayout implements View {
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save");
 
+        initBinder();
+
         save.addClickListener(event->{
         try {
             saveItem();
@@ -79,16 +86,43 @@ public class RegistrationItemView extends VerticalLayout implements View {
         place.setItems(placeService.getAll());
     }
 
+    private void initBinder() {
+        binder = new Binder<>();
+
+        binder.forField(name)
+                .asRequired("Name may not be empty")
+                .bind(Item::getName, Item::setName);
+
+        binder.forField(itemNumber)
+                .asRequired("article number may not be empty")
+                .bind(Item::getArticleNumber, Item::setArticleNumber);
+
+        binder.forField(category)
+                .bind(Item::getCategory, Item::setCategory);
+
+        binder.forField(place)
+                .bind(Item::getPlace, Item::setPlace);
+
+        binder.forField(cost)
+                .withConverter(
+                        new StringToBigDecimalConverter("Must enter a number"))
+                .bind(Item::getCost, Item::setCost);
+
+        binder.forField(purchaseDate)
+                .withConverter(new LocalDateToDateConverter())
+                .bind(Item::getPurchaseDate, Item::setPurchaseDate);
+
+        binder.forField(itemDescription)
+                .bind(Item::getDescription, Item::setDescription);
+
+        binder.addStatusChangeListener(
+                event -> save.setEnabled(binder.isValid()));
+    }
+
+
     @Transactional
     void saveItem() throws NumberFormatException, NullPointerException {
-        Item item = new Item();
-        item.setArticleNumber(itemNumber.getValue());
-        item.setCategory(category.getValue());
-        item.setPlace(place.getValue());
-        item.setCost(BigDecimal.valueOf(Double.parseDouble(cost.getValue())));
-        item.setDescription(itemDescription.getValue());
-        item.setName(name.getValue());
-        item.setPurchaseDate(java.sql.Date.valueOf(purchaseDate.getValue()));
+        Item item = binder.getBean();
         item.setRegistrationDate(new Date());
         itemService.saveItem(item);
         getUI().getNavigator().navigateTo(this.NAME);
