@@ -25,4 +25,9 @@ public class DefaultPlaceService implements PlaceService {
     public Place getByName(String name) {
        return placeRepository.findByName(name);
     }
+
+    @Override
+    public void save(Place place) {
+        placeRepository.save(place);
+    }
 }

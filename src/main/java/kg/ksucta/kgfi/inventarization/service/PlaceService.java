@@ -11,4 +11,6 @@ public interface PlaceService {
     List<Place> getAll();
 
     Place getByName(String name);
+
+    void save(Place place);
 }

@@ -25,4 +25,9 @@ public class DefaultCategoryService implements CategoryService {
     public Category getByName(String name) {
         return categoryRepository.findByName(name);
     }
+
+    @Override
+    public void save(Category category) {
+        categoryRepository.save(category);
+    }
 }

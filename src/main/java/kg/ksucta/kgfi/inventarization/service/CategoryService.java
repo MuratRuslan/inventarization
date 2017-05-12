@@ -11,4 +11,6 @@ public interface CategoryService {
     List<Category> getAll();
 
     Category getByName(String name);
+
+    void save(Category category);
 }
