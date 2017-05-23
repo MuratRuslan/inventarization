@@ -34,7 +34,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/VAADIN/**", "/PUSH/**", "/UIDL/**").permitAll()
-                .antMatchers("/*").access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

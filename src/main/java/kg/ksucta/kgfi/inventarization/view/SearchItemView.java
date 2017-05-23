@@ -4,6 +4,8 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.SerializableBiPredicate;
+import com.vaadin.server.SerializablePredicate;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
@@ -15,10 +17,10 @@ import kg.ksucta.kgfi.inventarization.service.ItemService;
 import kg.ksucta.kgfi.inventarization.service.PersonService;
 import kg.ksucta.kgfi.inventarization.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.haijian.PdfExporter;
 
 
 import javax.annotation.PostConstruct;
+import java.lang.reflect.Field;
 
 /**
  * Created by samsung on 10.05.2017.
@@ -69,15 +71,19 @@ public class SearchItemView extends VerticalLayout implements View {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
         filterTextField = new TextField();
         filterTextField.setPlaceholder("Filter");
-        filterTextField.addValueChangeListener(event -> {
-            dataProvider.setFilter(Item::getName, name -> {
-                String nameLower = name == null ? ""
-                        : name.toLowerCase();
-                String filterLower = event.getValue()
-                        .toLowerCase();
-                return nameLower.contains(filterLower);
-            });
-        });
+
+        filterTextField.addValueChangeListener(event ->
+                dataProvider.addFilter(Item::getName, name -> {
+            String nameLower = name == null ? ""
+                    : name.toLowerCase();
+            String filterLower = event.getValue()
+                    .toLowerCase();
+            return nameLower.contains(filterLower);
+        }));
+
+
     }
+
+
 
 }

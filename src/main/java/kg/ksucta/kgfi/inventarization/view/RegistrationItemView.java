@@ -38,7 +38,6 @@ public class RegistrationItemView extends VerticalLayout implements View {
     private Button save;
     private Binder<Item> binder;
 
-
     @Autowired
     private CategoryService categoryService;
 
@@ -60,7 +59,6 @@ public class RegistrationItemView extends VerticalLayout implements View {
         purchaseDate = new DateField("Purchase date");
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save");
-
         initBinder();
 
         save.addClickListener(event -> {
@@ -82,7 +80,6 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
     private void initBinder() {
         binder = new Binder<>();
-
         binder.forField(name)
                 .asRequired("Name may not be empty")
                 .bind(Item::getName, Item::setName);
@@ -116,9 +113,22 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
     @Transactional
     private void saveItem() {
-        Item item = binder.getBean();
+        Item item = getBindedItem();
         item.setRegistrationDate(new Date());
         itemService.saveItem(item);
         getUI().getNavigator().navigateTo(this.NAME);
+    }
+
+    private Item getBindedItem() {
+        Item item = new Item();
+        item.setArticleNumber(itemNumber.getValue());
+        item.setCategory(category.getValue());
+        item.setCost(new BigDecimal(Double.valueOf(cost.getValue())));
+        item.setName(name.getValue());
+        item.setDescription(itemDescription.getDescription());
+        item.setPlace(place.getValue());
+        item.setRegistrationDate(new Date());
+        item.setPurchaseDate(java.sql.Date.valueOf(purchaseDate.getValue()));
+        return item;
     }
 }
