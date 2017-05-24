@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.DoubleAccumulator;
  */
 @SpringView(name = RegistrationItemView.NAME)
 public class RegistrationItemView extends VerticalLayout implements View {
-    public final static String NAME = "RegistrationItemView ";
+    public final static String NAME = "RegistrationItemView";
     private Label header;
     private TextField itemNumber;
     private TextField name;

@@ -27,7 +27,7 @@ public class DefaultPlaceService implements PlaceService {
     }
 
     @Override
-    public void save(Place place) {
+    public void savePlace(Place place) {
         placeRepository.save(place);
     }
 }

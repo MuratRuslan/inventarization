@@ -12,5 +12,5 @@ public interface PlaceService {
 
     Place getByName(String name);
 
-    void save(Place place);
+    void savePlace(Place place);
 }
