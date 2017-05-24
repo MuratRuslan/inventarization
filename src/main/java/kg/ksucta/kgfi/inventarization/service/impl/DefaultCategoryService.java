@@ -27,7 +27,7 @@ public class DefaultCategoryService implements CategoryService {
     }
 
     @Override
-    public void save(Category category) {
+    public void saveCategory(Category category) {
         categoryRepository.save(category);
     }
 }
