@@ -56,7 +56,9 @@ public class RegistrationItemView extends VerticalLayout implements View {
         category = new NativeSelect<>("Choose category");
         place = new ComboBox<>("Place");
         cost = new TextField("Cost");
+        cost.setValue("0");
         purchaseDate = new DateField("Purchase date");
+        purchaseDate.setValue(null);
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save");
         initBinder();
@@ -114,7 +116,6 @@ public class RegistrationItemView extends VerticalLayout implements View {
     @Transactional
     private void saveItem() {
         Item item = getBindedItem();
-        item.setRegistrationDate(new Date());
         itemService.saveItem(item);
         getUI().getNavigator().navigateTo(this.NAME);
     }
@@ -128,7 +129,8 @@ public class RegistrationItemView extends VerticalLayout implements View {
         item.setDescription(itemDescription.getDescription());
         item.setPlace(place.getValue());
         item.setRegistrationDate(new Date());
-        item.setPurchaseDate(java.sql.Date.valueOf(purchaseDate.getValue()));
+        if(!purchaseDate.isEmpty())
+            item.setPurchaseDate(java.sql.Date.valueOf(purchaseDate.getValue()));
         return item;
     }
 }

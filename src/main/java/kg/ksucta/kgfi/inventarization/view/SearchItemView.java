@@ -34,12 +34,6 @@ public class SearchItemView extends VerticalLayout implements View {
 
     @Autowired
     private ItemService itemService;
-    @Autowired
-    private PersonService personService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private PlaceService placeService;
 
 
     @PostConstruct
@@ -54,9 +48,10 @@ public class SearchItemView extends VerticalLayout implements View {
 
     }
 
-    void initComponents() {
+    private void initComponents() {
         items = new Grid<>();
-        items.addColumn(Item::getName).setCaption("Item name");
+        TextField itemName = new TextField("Name");
+        items.addColumn(Item::getName).setCaption("Item name").setEditorComponent(itemName, Item::setName);
         items.addColumn(Item::getArticleNumber).setCaption("Article number");
         items.addColumn(Item::getCategory).setCaption("Category");
         items.addColumn(Item::getPlace).setCaption("Place");
@@ -67,8 +62,11 @@ public class SearchItemView extends VerticalLayout implements View {
         items.setSizeFull();
         ListDataProvider<Item> dataProvider = DataProvider.ofCollection(itemService.getAll());
         items.setDataProvider(dataProvider);
+        items.getEditor().setEnabled(true);
+        items.getEditor().addSaveListener(editorSaveEvent -> {
+            itemService.saveItem(editorSaveEvent.getBean());
+        });
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout();
         filterTextField = new TextField();
         filterTextField.setPlaceholder("Filter");
 
