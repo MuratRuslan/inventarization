@@ -28,7 +28,7 @@ import java.lang.reflect.Field;
 @SpringView(name = SearchItemView.NAME)
 public class SearchItemView extends VerticalLayout implements View {
 
-    public final static String NAME = " ";
+    public final static String NAME = "";
     private TextField filterTextField;
     private Grid<Item> items;
 
@@ -63,9 +63,8 @@ public class SearchItemView extends VerticalLayout implements View {
         ListDataProvider<Item> dataProvider = DataProvider.ofCollection(itemService.getAll());
         items.setDataProvider(dataProvider);
         items.getEditor().setEnabled(true);
-        items.getEditor().addSaveListener(editorSaveEvent -> {
-            itemService.saveItem(editorSaveEvent.getBean());
-        });
+        items.getEditor().addSaveListener(editorSaveEvent ->
+                itemService.saveItem(editorSaveEvent.getBean()));
 
         filterTextField = new TextField();
         filterTextField.setPlaceholder("Filter");
