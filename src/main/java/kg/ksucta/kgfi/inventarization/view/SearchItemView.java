@@ -28,7 +28,7 @@ import java.lang.reflect.Field;
 @SpringView(name = SearchItemView.NAME)
 public class SearchItemView extends VerticalLayout implements View {
 
-    public final static String NAME = "SearchItemView";
+    public final static String NAME = " ";
     private TextField filterTextField;
     private Grid<Item> items;
 
@@ -71,7 +71,7 @@ public class SearchItemView extends VerticalLayout implements View {
         filterTextField.setPlaceholder("Filter");
 
         filterTextField.addValueChangeListener(event ->
-                dataProvider.addFilter(Item::getName, name -> {
+                dataProvider.setFilter(Item::getName, name -> {
             String nameLower = name == null ? ""
                     : name.toLowerCase();
             String filterLower = event.getValue()

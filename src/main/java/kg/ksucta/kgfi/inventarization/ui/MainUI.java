@@ -9,7 +9,6 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import kg.ksucta.kgfi.inventarization.view.AdminView;
-import kg.ksucta.kgfi.inventarization.view.DefaultView;
 import kg.ksucta.kgfi.inventarization.view.RegistrationItemView;
 import kg.ksucta.kgfi.inventarization.view.SearchItemView;
 
@@ -30,7 +29,6 @@ public class MainUI extends UI implements ViewDisplay {
 
         final CssLayout navigationBar = new CssLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-        navigationBar.addComponent(createNavigationButton("DefaultView", DefaultView.NAME));
         navigationBar.addComponent(createNavigationButton("AdminView", AdminView.NAME));
         navigationBar.addComponent(createNavigationButton("Item Registration", RegistrationItemView.NAME));
         navigationBar.addComponent(createNavigationButton("Search item", SearchItemView.NAME));

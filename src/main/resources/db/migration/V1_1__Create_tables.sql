@@ -48,6 +48,13 @@ CREATE TABLE role
     description VARCHAR(250)
 );
 
+CREATE SEQUENCE hibernate_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE UNIQUE INDEX uk_46ccwnsi9409t36lurvtyljak ON category (name);
 ALTER TABLE image ADD FOREIGN KEY (item_id) REFERENCES item (id);
 ALTER TABLE item ADD FOREIGN KEY (category) REFERENCES category (id);

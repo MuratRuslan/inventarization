@@ -61,6 +61,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
         purchaseDate.setValue(null);
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save");
+        save.setEnabled(false);
         initBinder();
 
         save.addClickListener(event -> {
