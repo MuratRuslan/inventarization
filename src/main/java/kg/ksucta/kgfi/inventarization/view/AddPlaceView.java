@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
 @SpringView(name=AddPlaceView.NAME)
 public class AddPlaceView extends VerticalLayout implements View {
 
-    public final static String NAME = "AddPlaceView";
+    public final static String NAME = "Add Place";
     private Label header;
     private TextField name;
     private TextArea placeDescription;

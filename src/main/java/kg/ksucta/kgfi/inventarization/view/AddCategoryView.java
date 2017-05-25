@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
 @SpringView(name=AddCategoryView.NAME)
 public class AddCategoryView extends VerticalLayout implements View {
 
-    public final static String NAME = "AddCategoryView";
+    public final static String NAME = "Add Category";
     private Label header;
     private TextField name;
     private TextArea categoryDescription;
@@ -26,7 +26,7 @@ public class AddCategoryView extends VerticalLayout implements View {
     private Binder<Category> binder;
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @PostConstruct
     void init() {
