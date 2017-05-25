@@ -1,6 +1,7 @@
 package kg.ksucta.kgfi.inventarization.config;
 
 
+import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +42,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**").anonymous()
                 .antMatchers("/vaadinServlet/UIDL/**").permitAll()
                 .antMatchers("/vaadinServlet/HEARTBEAT/**", "/VAADIN/**", "/PUSH/**", "/UIDL/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
         http.exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));

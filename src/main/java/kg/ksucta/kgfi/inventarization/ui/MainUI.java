@@ -30,21 +30,17 @@ public class MainUI extends UI {
     protected void init(VaadinRequest request) {
         final VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
-
-
-
+        springViewDisplay = new Panel();
+        springViewDisplay.setSizeFull();
+        navigator = new Navigator(this, springViewDisplay);
+        navigator.addProvider(springViewProvider);
         final CssLayout navigationBar = new CssLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
         navigationBar.addComponent(createNavigationButton("Item Registration", RegistrationItemView.NAME));
         navigationBar.addComponent(createNavigationButton("Search item", SearchItemView.NAME));
-        root.addComponent(navigationBar);
-
-        springViewDisplay = new Panel();
-        springViewDisplay.setSizeFull();
-        root.addComponent(springViewDisplay);
+        root.addComponents(navigationBar, springViewDisplay);
         root.setExpandRatio(springViewDisplay, 1.0f);
-        navigator = new Navigator(this, springViewDisplay);
-        navigator.addProvider(springViewProvider);
+
         setContent(root);
     }
 

@@ -8,7 +8,9 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import kg.ksucta.kgfi.inventarization.form.LoginForm;
+import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
 import org.jboss.jandex.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +33,7 @@ public class LoginUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         LoginForm loginForm = new LoginForm(this::login);
         VerticalLayout layout = new VerticalLayout(loginForm);
-        layout.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
+        layout.setComponentAlignment(loginForm, Alignment.TOP_RIGHT);
         setContent(layout);
     }
 
@@ -41,7 +43,11 @@ public class LoginUI extends UI {
                     .authenticate(new UsernamePasswordAuthenticationToken(username, password));
             VaadinService.reinitializeSession(VaadinService.getCurrentRequest());
             SecurityContextHolder.getContext().setAuthentication(token);
-            getPage().setLocation("/");
+            if(SecurityUtils.hasRole(RoleName.ROLE_ADMIN.name())) {
+                getPage().setLocation("/admin");
+            } else {
+                getPage().setLocation("/");
+            }
             return true;
         } catch (AuthenticationException ex) {
             return false;

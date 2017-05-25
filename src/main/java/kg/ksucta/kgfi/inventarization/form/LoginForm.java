@@ -8,7 +8,6 @@ public class LoginForm extends VerticalLayout {
     public LoginForm(LoginCallback callback) {
         setMargin(true);
         setSpacing(true);
-
         TextField username = new TextField("username");
         addComponent(username);
 

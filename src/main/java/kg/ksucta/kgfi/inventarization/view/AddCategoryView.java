@@ -6,8 +6,11 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import kg.ksucta.kgfi.inventarization.domain.Category;
+import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import kg.ksucta.kgfi.inventarization.service.CategoryService;
+import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -73,6 +76,7 @@ public class AddCategoryView extends VerticalLayout implements View {
         category.setDescription(categoryDescription.getValue());
         return category;
     }
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
 
