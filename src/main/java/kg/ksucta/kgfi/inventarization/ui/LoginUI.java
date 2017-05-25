@@ -43,7 +43,7 @@ public class LoginUI extends UI {
                     .authenticate(new UsernamePasswordAuthenticationToken(username, password));
             VaadinService.reinitializeSession(VaadinService.getCurrentRequest());
             SecurityContextHolder.getContext().setAuthentication(token);
-            if(SecurityUtils.hasRole(RoleName.ROLE_ADMIN.name())) {
+            if(SecurityUtils.hasRole(RoleName.ADMIN.name())) {
                 getPage().setLocation("/admin");
             } else {
                 getPage().setLocation("/");
