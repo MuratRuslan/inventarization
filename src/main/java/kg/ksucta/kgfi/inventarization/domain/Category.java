@@ -19,11 +19,6 @@ public class Category {
     private List<Item> items;
 
 
-    @Override
-    public String toString() {
-        return getName();
-    }
-
     public Integer getId() {
         return id;
     }
@@ -54,5 +49,10 @@ public class Category {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

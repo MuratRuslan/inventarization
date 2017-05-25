@@ -6,6 +6,7 @@ import kg.ksucta.kgfi.inventarization.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,8 @@ public class DefaultPersonService implements PersonService {
 
     @Override
     public void savePerson(Person person) {
+        String password = person.getPassword();
+        person.setPassword(Base64.getEncoder().encodeToString(password.getBytes()));
         personRepository.save(person);
     }
 

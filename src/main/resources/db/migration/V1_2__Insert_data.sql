@@ -13,7 +13,7 @@ INSERT INTO item VALUES (2, '902j0jaf', 453.00, 'nvianv', 'kdofpasj', '2017-05-2
 
 
 
-INSERT INTO person VALUES (1, 'ruslan uulu', 'murat', 'murat', '123');
+INSERT INTO person VALUES (1, 'ruslan uulu', 'murat', 'murat', 'MTIz');
 
 INSERT INTO role VALUES (1, 'ADMIN', NULL);
 INSERT INTO role VALUES (2, 'USER', NULL);

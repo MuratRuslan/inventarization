@@ -4,23 +4,21 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.SerializableBiPredicate;
-import com.vaadin.server.SerializablePredicate;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
+import kg.ksucta.kgfi.inventarization.domain.Category;
 import kg.ksucta.kgfi.inventarization.domain.Item;
-import kg.ksucta.kgfi.inventarization.service.CategoryService;
+import kg.ksucta.kgfi.inventarization.domain.Place;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
-import kg.ksucta.kgfi.inventarization.service.PersonService;
-import kg.ksucta.kgfi.inventarization.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.annotation.PostConstruct;
-import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * Created by samsung on 10.05.2017.
@@ -30,6 +28,7 @@ public class SearchItemView extends VerticalLayout implements View {
 
     public final static String NAME = "";
     private TextField filterTextField;
+    private Collection<Item> itemCollection;
     private Grid<Item> items;
 
     @Autowired
@@ -45,7 +44,8 @@ public class SearchItemView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
+        itemCollection = itemService.getAll();
+        items.setDataProvider(DataProvider.ofCollection(itemCollection));
     }
 
     private void initComponents() {
@@ -60,27 +60,37 @@ public class SearchItemView extends VerticalLayout implements View {
         items.addColumn(Item::getRegistrationDate).setCaption("Registration date");
         items.addColumn(Item::getDescription).setCaption("Description");
         items.setSizeFull();
-        ListDataProvider<Item> dataProvider = DataProvider.ofCollection(itemService.getAll());
-        items.setDataProvider(dataProvider);
         items.getEditor().setEnabled(true);
         items.getEditor().addSaveListener(editorSaveEvent ->
                 itemService.saveItem(editorSaveEvent.getBean()));
-
-        filterTextField = new TextField();
-        filterTextField.setPlaceholder("Filter");
-
-        filterTextField.addValueChangeListener(event ->
-                dataProvider.setFilter(Item::getName, name -> {
-            String nameLower = name == null ? ""
-                    : name.toLowerCase();
-            String filterLower = event.getValue()
-                    .toLowerCase();
-            return nameLower.contains(filterLower);
-        }));
-
-
+        filterTextField = (TextField) buildFilter();
     }
 
+    private Component buildFilter() {
+        final TextField filter = new TextField();
+        filter.addValueChangeListener(event -> {
+            Collection<Item> transactions = itemCollection
+                    .stream().filter(item -> passesFilter(item.getName())
+                            || passesFilter(item.getArticleNumber())
+                            || passesFilter(item.getCategory())
+                            || passesFilter(item.getPlace())).collect(Collectors.toList());
 
+            ListDataProvider<Item> dataProvider = DataProvider.ofCollection(transactions);
+            dataProvider.addSortComparator(Comparator
+                    .comparing(Item::getRegistrationDate).reversed()::compare);
+            items.setDataProvider(dataProvider);
+        });
 
+        filter.setPlaceholder("Filter");
+        filter.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
+        return filter;
+    }
+
+    private <T> boolean passesFilter(T subject) {
+        if(subject == null) {
+            return false;
+        }
+        return subject.toString().trim().toLowerCase()
+                .contains(filterTextField.getValue().toLowerCase());
+    }
 }
