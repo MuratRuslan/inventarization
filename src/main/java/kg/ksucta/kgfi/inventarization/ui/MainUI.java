@@ -30,7 +30,7 @@ public class MainUI extends UI {
     protected void init(VaadinRequest request) {
         final VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
-        setContent(root);
+
 
 
         final CssLayout navigationBar = new CssLayout();
@@ -45,7 +45,7 @@ public class MainUI extends UI {
         root.setExpandRatio(springViewDisplay, 1.0f);
         navigator = new Navigator(this, springViewDisplay);
         navigator.addProvider(springViewProvider);
-        setNavigator(navigator);
+        setContent(root);
     }
 
     private Button createNavigationButton(String caption, final String viewName) {

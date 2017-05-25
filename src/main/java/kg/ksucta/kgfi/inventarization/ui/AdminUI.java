@@ -29,15 +29,15 @@ public class AdminUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         springViewDisplay = new Panel();
         springViewDisplay.setSizeFull();
-        menuBar = new MenuBar();
-        MenuBar.MenuItem add = menuBar.addItem("add", null);
-        add.addItem("add Category", menuItem ->  getNavigator().navigateTo(AddCategoryView.NAME));
-        add.addItem("add Place", menuItem -> getNavigator().navigateTo(AddPlaceView.NAME));
-        VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.addComponents(menuBar, new Label("hello"), springViewDisplay);
-        setContent(verticalLayout);
         navigator = new Navigator(this, springViewDisplay);
         navigator.addProvider(springViewProvider);
-        setNavigator(navigator);
+        menuBar = new MenuBar();
+        MenuBar.MenuItem add = menuBar.addItem("add", null);
+        add.addItem("add Category", menuItem ->  navigator.navigateTo(AddCategoryView.NAME));
+        add.addItem("add Place", menuItem -> navigator.navigateTo(AddPlaceView.NAME));
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.addComponents(menuBar, springViewDisplay);
+        setContent(verticalLayout);
+
     }
 }

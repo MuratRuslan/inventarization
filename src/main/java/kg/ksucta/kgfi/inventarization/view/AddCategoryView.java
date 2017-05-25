@@ -35,12 +35,15 @@ public class AddCategoryView extends VerticalLayout implements View {
         name = new TextField("Name");
         categoryDescription = new TextArea("Description", "Type here description of the category");
         save = new Button("Save");
+        save.setEnabled(false);
         initBinder();
 
         save.addClickListener(event -> {
             saveCategory();
             Notification.show("Success");
         });
+        binder.addStatusChangeListener(
+                event -> save.setEnabled(binder.isValid()));
 
         addComponents(header, name, categoryDescription, save);
 

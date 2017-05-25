@@ -14,13 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.vaadin.spring.config.VaadinExtensionsConfiguration;
-import org.vaadin.spring.http.HttpService;
-import org.vaadin.spring.security.annotation.EnableVaadinSharedSecurity;
-import org.vaadin.spring.security.config.VaadinSharedSecurityConfiguration;
-import org.vaadin.spring.security.shared.VaadinAuthenticationSuccessHandler;
-import org.vaadin.spring.security.shared.VaadinUrlAuthenticationSuccessHandler;
-import org.vaadin.spring.security.web.VaadinRedirectStrategy;
 
 
 /**
@@ -28,9 +21,7 @@ import org.vaadin.spring.security.web.VaadinRedirectStrategy;
  */
 @Configuration
 @EnableWebSecurity
-@Import({VaadinExtensionsConfiguration.class, VaadinSharedSecurityConfiguration.class})
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableVaadinSharedSecurity
+@EnableGlobalMethodSecurity
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -62,9 +53,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    @Bean(name = VaadinSharedSecurityConfiguration.VAADIN_AUTHENTICATION_SUCCESS_HANDLER_BEAN)
+    /*@Bean(name = VaadinSharedSecurityConfiguration.VAADIN_AUTHENTICATION_SUCCESS_HANDLER_BEAN)
     protected VaadinAuthenticationSuccessHandler vaadinAuthenticationSuccessHandler(HttpService httpService, VaadinRedirectStrategy vaadinRedirectStrategy) {
         return new VaadinUrlAuthenticationSuccessHandler(httpService, vaadinRedirectStrategy, "/");
-    }
+    }*/
 
 }

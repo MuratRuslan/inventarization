@@ -41,6 +41,8 @@ public class AddPlaceView extends VerticalLayout implements View {
             saveCategory();
             Notification.show("Success");
         });
+        binder.addStatusChangeListener(
+                event -> save.setEnabled(binder.isValid()));
 
         addComponents(header, name, placeDescription, save);
 
