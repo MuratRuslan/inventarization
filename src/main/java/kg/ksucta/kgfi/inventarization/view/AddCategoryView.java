@@ -61,6 +61,8 @@ public class AddCategoryView extends VerticalLayout implements View {
                 .bind(Category::getName, Category::setName);
         binder.forField(categoryDescription)
                 .bind(Category::getDescription, Category::setDescription);
+        binder.addStatusChangeListener(
+                event -> save.setEnabled(binder.isValid()));
     }
 
     @Transactional

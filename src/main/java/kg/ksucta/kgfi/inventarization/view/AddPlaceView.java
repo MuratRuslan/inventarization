@@ -57,6 +57,8 @@ public class AddPlaceView extends VerticalLayout implements View {
                 .bind(Place::getName, Place::setName);
         binder.forField(placeDescription)
                 .bind(Place::getDescription, Place::setDescription);
+        binder.addStatusChangeListener(
+                event -> save.setEnabled(binder.isValid()));
     }
 
     @Transactional

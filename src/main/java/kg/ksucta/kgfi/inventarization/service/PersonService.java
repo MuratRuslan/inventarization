@@ -1,6 +1,7 @@
 package kg.ksucta.kgfi.inventarization.service;
 
 import kg.ksucta.kgfi.inventarization.domain.Person;
+import kg.ksucta.kgfi.inventarization.domain.Role;
 
 import java.util.List;
 import java.util.Set;
@@ -16,5 +17,6 @@ public interface PersonService {
     Set<Person> getPersonByNameAndLastname(String name, String lastname);
     Person getPersonByLogin(String login);
     List<Person> getAll();
+    Set<Role> getRoles();
     void savePerson(Person person);
 }

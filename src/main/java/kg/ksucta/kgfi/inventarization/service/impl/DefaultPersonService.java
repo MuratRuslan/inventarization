@@ -1,6 +1,7 @@
 package kg.ksucta.kgfi.inventarization.service.impl;
 
 import kg.ksucta.kgfi.inventarization.domain.Person;
+import kg.ksucta.kgfi.inventarization.domain.Role;
 import kg.ksucta.kgfi.inventarization.repository.PersonRepository;
 import kg.ksucta.kgfi.inventarization.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,10 @@ public class DefaultPersonService implements PersonService {
     @Override
     public List<Person> getAll() {
         return personRepository.findAll();
+    }
+
+    @Override
+    public Set<Role> getRoles() {
+        return null;
     }
 }

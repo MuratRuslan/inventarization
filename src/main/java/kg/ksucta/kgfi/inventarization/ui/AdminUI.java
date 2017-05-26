@@ -8,10 +8,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
-import kg.ksucta.kgfi.inventarization.view.AddCategoryView;
-import kg.ksucta.kgfi.inventarization.view.AddPlaceView;
-import kg.ksucta.kgfi.inventarization.view.RegistrationItemView;
-import kg.ksucta.kgfi.inventarization.view.SearchItemView;
+import kg.ksucta.kgfi.inventarization.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -32,10 +29,11 @@ public class AdminUI extends UI {
         navigator = new Navigator(this, springViewDisplay);
         navigator.addProvider(springViewProvider);
         menuBar = new MenuBar();
-        MenuBar.MenuItem add = menuBar.addItem("add", null);
+        MenuBar.MenuItem add = menuBar.addItem("Add ...", null);
         add.addItem("add Category", menuItem ->  navigator.navigateTo(AddCategoryView.NAME));
         add.addItem("add Place", menuItem -> navigator.navigateTo(AddPlaceView.NAME));
         add.addItem("add Item", menuItem -> navigator.navigateTo(RegistrationItemView.NAME));
+        add.addItem("add User", menuItem -> navigator.navigateTo(RegistrationUserView.NAME));
         menuBar.addItem("Search items", menuItem -> navigator.navigateTo(SearchItemView.NAME));
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponents(menuBar, springViewDisplay);
