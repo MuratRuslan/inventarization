@@ -1,4 +1,3 @@
-
 INSERT INTO category VALUES (1, NULL, 'Laptop');
 INSERT INTO category VALUES (2, NULL, 'PC component');
 INSERT INTO category VALUES (3, NULL, 'Storage');
