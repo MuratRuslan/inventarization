@@ -103,7 +103,7 @@ public class RegistrationUserView extends VerticalLayout implements View {
         person.setLogin(login.getValue());
         person.setPassword(password.getValue());
 
-        person.setRoles(new ArrayList<>(roles.getValue()));
+        person.setRoles(new ArrayList<>(roles.getSelectedItems()));
         return person;
     }
 }

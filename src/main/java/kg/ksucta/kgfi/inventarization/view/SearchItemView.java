@@ -5,8 +5,10 @@ import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.Registration;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
+import com.vaadin.ui.components.grid.HeaderCell;
 import com.vaadin.ui.themes.ValoTheme;
 import kg.ksucta.kgfi.inventarization.domain.Category;
 import kg.ksucta.kgfi.inventarization.domain.Item;
@@ -30,6 +32,7 @@ public class SearchItemView extends VerticalLayout implements View {
     private TextField filterTextField;
     private Collection<Item> itemCollection;
     private Grid<Item> items;
+    private ListDataProvider<Item> dataProvider;
 
     @Autowired
     private ItemService itemService;
@@ -45,7 +48,8 @@ public class SearchItemView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         itemCollection = itemService.getAll();
-        items.setDataProvider(DataProvider.ofCollection(itemCollection));
+        dataProvider = DataProvider.ofCollection(itemCollection);
+        items.setDataProvider(dataProvider);
     }
 
     private void initComponents() {
@@ -75,10 +79,9 @@ public class SearchItemView extends VerticalLayout implements View {
                             || passesFilter(item.getCategory())
                             || passesFilter(item.getPlace())).collect(Collectors.toList());
 
-            ListDataProvider<Item> dataProvider = DataProvider.ofCollection(transactions);
+            dataProvider = DataProvider.ofCollection(transactions);
             dataProvider.addSortComparator(Comparator
                     .comparing(Item::getRegistrationDate).reversed()::compare);
-            items.setDataProvider(dataProvider);
         });
 
         filter.setPlaceholder("Filter");
@@ -93,4 +96,6 @@ public class SearchItemView extends VerticalLayout implements View {
         return subject.toString().trim().toLowerCase()
                 .contains(filterTextField.getValue().toLowerCase());
     }
+
+
 }
