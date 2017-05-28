@@ -4,7 +4,9 @@ package kg.ksucta.kgfi.inventarization.repository;
 import kg.ksucta.kgfi.inventarization.domain.Category;
 import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.Place;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,6 +16,7 @@ import java.util.Set;
 /**
  * Created by dronk_000 on 29.04.2017.
  */
+@Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Set<Item> findByPlace(Place place);
     Set<Item> findByCategory(Category category);
@@ -25,4 +28,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Item findByArticleNumber(String inventarNumber);
     List<Item> findByCostGreaterThanEqual(BigDecimal cost);
     List<Item> findByCostLessThanEqual(BigDecimal cost);
+
+    @Override
+    @Cacheable("items")
+    List<Item> findAll();
 }

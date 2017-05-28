@@ -2,9 +2,11 @@ package kg.ksucta.kgfi.inventarization.repository;
 
 import kg.ksucta.kgfi.inventarization.domain.Person;
 import kg.ksucta.kgfi.inventarization.domain.Role;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,4 +18,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Set<Person> findByLastname(String lastname);
     Set<Person> findByNameAndLastname(String name, String lastname);
     Person findByLogin(String login);
+
+    @Override
+    @Cacheable("persons")
+    List<Person> findAll();
 }
