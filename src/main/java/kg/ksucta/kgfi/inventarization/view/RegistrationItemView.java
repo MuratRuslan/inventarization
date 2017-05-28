@@ -33,7 +33,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
     private TextField itemNumber;
     private TextField name;
     private TextField cost;
-    private NativeSelect<Category> category;
+    private ComboBox<Category> category;
     private ComboBox<Place> place;
     private DateField purchaseDate;
     private TextArea itemDescription;
@@ -54,7 +54,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
         header = new Label("Item Registration");
         itemNumber = new TextField("Item number");
         name = new TextField("Name");
-        category = new NativeSelect<>("Choose category");
+        category = new ComboBox<>("Choose category");
         place = new ComboBox<>("Place");
         cost = new TextField("Cost");
         cost.setValue("0");
@@ -121,14 +121,14 @@ public class RegistrationItemView extends VerticalLayout implements View {
     @Transactional
     private void saveItem() throws ValidationException {
         Item item = binder.getBean();
-        if(item == null) {
+        if (item == null) {
             item = new Item();
             binder.writeBean(item);
         }
         item.setRegistrationDate(new Date());
         itemService.saveItem(item);
-        if(getParent() instanceof Window) {
-            ((Window)getParent()).close();
+        if (getParent() instanceof Window) {
+            ((Window) getParent()).close();
         } else {
             getUI().getNavigator().navigateTo(this.NAME);
         }
@@ -136,15 +136,9 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
 
     public void setItem(Item item) {
-        try {
-            binder.readBean(item);
-            binder.setBean(item);
-            binder.writeBean(item);
-            category.setItems(categoryService.getAll());
-            place.setItems(placeService.getAll());
-        } catch (ValidationException e) {
-
-        }
-
+        binder.readBean(item);
+        binder.setBean(item);
+        category.setItems(categoryService.getAll());
+        place.setItems(placeService.getAll());
     }
 }
