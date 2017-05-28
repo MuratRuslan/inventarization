@@ -59,21 +59,15 @@ public class AddPlaceView extends VerticalLayout implements View {
                 .bind(Place::getDescription, Place::setDescription);
         binder.addStatusChangeListener(
                 event -> save.setEnabled(binder.isValid()));
+        binder.setBean(new Place());
     }
 
     @Transactional
     private void saveCategory(){
-        Place place = getBindedPlace();
-        placeService.savePlace(place);
+        placeService.savePlace(binder.getBean());
         getUI().getNavigator().navigateTo(this.NAME);
     }
 
-    private Place getBindedPlace(){
-        Place place = new Place();
-        place.setName(name.getValue());
-        place.setDescription(placeDescription.getValue());
-        return place;
-    }
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
 

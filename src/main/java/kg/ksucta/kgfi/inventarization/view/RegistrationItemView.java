@@ -1,6 +1,7 @@
 package kg.ksucta.kgfi.inventarization.view;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.ValidationException;
 import com.vaadin.data.converter.LocalDateToDateConverter;
 import com.vaadin.data.converter.StringToBigDecimalConverter;
 import com.vaadin.navigator.View;
@@ -13,6 +14,7 @@ import kg.ksucta.kgfi.inventarization.domain.Place;
 import kg.ksucta.kgfi.inventarization.service.CategoryService;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
 import kg.ksucta.kgfi.inventarization.service.PlaceService;
+import org.omg.CORBA.NO_IMPLEMENT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +38,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
     private DateField purchaseDate;
     private TextArea itemDescription;
     private Button save;
-    private Binder<Item> binder;
+    private Binder<Item> binder = new Binder<>();
 
     @Autowired
     private CategoryService categoryService;
@@ -47,8 +49,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
     @Autowired
     private ItemService itemService;
 
-    @PostConstruct
-    void init() {
+    public RegistrationItemView() {
         setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         header = new Label("Item Registration");
         itemNumber = new TextField("Item number");
@@ -62,16 +63,20 @@ public class RegistrationItemView extends VerticalLayout implements View {
         itemDescription = new TextArea("Description", "Type here description of the item");
         save = new Button("Save");
         save.setEnabled(false);
+        binder.readBean(new Item());
         initBinder();
 
         save.addClickListener(event -> {
-            saveItem();
-            Notification.show("Success");
+            try {
+                saveItem();
+                Notification.show("Success");
+            } catch (ValidationException e) {
+                Notification.show("Failed");
+            }
         });
 
         addComponents(header, itemNumber, name, category, place, cost,
                 purchaseDate, itemDescription, save);
-
     }
 
 
@@ -82,7 +87,6 @@ public class RegistrationItemView extends VerticalLayout implements View {
     }
 
     private void initBinder() {
-        binder = new Binder<>();
         binder.forField(name)
                 .asRequired("Name may not be empty")
                 .bind(Item::getName, Item::setName);
@@ -115,23 +119,32 @@ public class RegistrationItemView extends VerticalLayout implements View {
 
 
     @Transactional
-    private void saveItem() {
-        Item item = getBindedItem();
+    private void saveItem() throws ValidationException {
+        Item item = binder.getBean();
+        if(item == null) {
+            item = new Item();
+            binder.writeBean(item);
+        }
+        item.setRegistrationDate(new Date());
         itemService.saveItem(item);
-        getUI().getNavigator().navigateTo(this.NAME);
+        if(getParent() instanceof Window) {
+            ((Window)getParent()).close();
+        } else {
+            getUI().getNavigator().navigateTo(this.NAME);
+        }
     }
 
-    private Item getBindedItem() {
-        Item item = new Item();
-        item.setArticleNumber(itemNumber.getValue());
-        item.setCategory(category.getValue());
-        item.setCost(new BigDecimal(Double.valueOf(cost.getValue())));
-        item.setName(name.getValue());
-        item.setDescription(itemDescription.getDescription());
-        item.setPlace(place.getValue());
-        item.setRegistrationDate(new Date());
-        if(!purchaseDate.isEmpty())
-            item.setPurchaseDate(java.sql.Date.valueOf(purchaseDate.getValue()));
-        return item;
+
+    public void setItem(Item item) {
+        try {
+            binder.readBean(item);
+            binder.setBean(item);
+            binder.writeBean(item);
+            category.setItems(categoryService.getAll());
+            place.setItems(placeService.getAll());
+        } catch (ValidationException e) {
+
+        }
+
     }
 }

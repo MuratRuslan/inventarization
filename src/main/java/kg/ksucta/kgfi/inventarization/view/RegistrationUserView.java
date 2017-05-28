@@ -15,10 +15,7 @@ import org.springframework.beans.factory.parsing.PassThroughSourceExtractor;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Baktiyar on 24.05.2017.
@@ -95,6 +92,7 @@ public class RegistrationUserView extends VerticalLayout implements View {
         personService.savePerson(person);
         getUI().getNavigator().navigateTo(this.NAME);
     }
+
 
     private Person getBindedPerson() {
         Person person = new Person();

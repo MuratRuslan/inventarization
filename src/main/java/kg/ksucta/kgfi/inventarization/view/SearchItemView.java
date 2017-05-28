@@ -4,23 +4,23 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.Registration;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
-import com.vaadin.ui.components.grid.HeaderCell;
 import com.vaadin.ui.themes.ValoTheme;
-import kg.ksucta.kgfi.inventarization.domain.Category;
 import kg.ksucta.kgfi.inventarization.domain.Item;
-import kg.ksucta.kgfi.inventarization.domain.Place;
+import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.Role;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
+
+import static kg.ksucta.kgfi.inventarization.utils.SecurityUtils.hasRole;
 
 /**
  * Created by samsung on 10.05.2017.
@@ -35,6 +35,9 @@ public class SearchItemView extends VerticalLayout implements View {
     private ListDataProvider<Item> dataProvider;
 
     @Autowired
+    private RegistrationItemView registrationItemView;
+
+    @Autowired
     private ItemService itemService;
 
 
@@ -42,7 +45,6 @@ public class SearchItemView extends VerticalLayout implements View {
     private void init() {
         initComponents();
         addComponents(filterTextField, items);
-
     }
 
     @Override
@@ -64,9 +66,8 @@ public class SearchItemView extends VerticalLayout implements View {
         items.addColumn(Item::getRegistrationDate).setCaption("Registration date");
         items.addColumn(Item::getDescription).setCaption("Description");
         items.setSizeFull();
-        items.getEditor().setEnabled(true);
-        items.getEditor().addSaveListener(editorSaveEvent ->
-                itemService.saveItem(editorSaveEvent.getBean()));
+
+        items.addItemClickListener(itemClick -> showItemEdit(itemClick.getItem()));
         filterTextField = (TextField) buildFilter();
     }
 
@@ -80,8 +81,7 @@ public class SearchItemView extends VerticalLayout implements View {
                             || passesFilter(item.getPlace())).collect(Collectors.toList());
 
             dataProvider = DataProvider.ofCollection(transactions);
-            dataProvider.addSortComparator(Comparator
-                    .comparing(Item::getRegistrationDate).reversed()::compare);
+            items.setDataProvider(dataProvider);
         });
 
         filter.setPlaceholder("Filter");
@@ -90,7 +90,7 @@ public class SearchItemView extends VerticalLayout implements View {
     }
 
     private <T> boolean passesFilter(T subject) {
-        if(subject == null) {
+        if (subject == null) {
             return false;
         }
         return subject.toString().trim().toLowerCase()
@@ -98,4 +98,19 @@ public class SearchItemView extends VerticalLayout implements View {
     }
 
 
+    private void showItemEdit(Item item) {
+        if (hasRole(RoleName.OPERATOR.name()) || hasRole(RoleName.ADMIN.name())) {
+            Window editWindow = new Window("Edit item");
+            editWindow.setContent(registrationItemView);
+            registrationItemView.setItem(item);
+            getUI().addWindow(editWindow);
+            editWindow.center();
+            editWindow.setHeight("70%");
+            editWindow.addCloseListener(closeEvent -> {
+                itemCollection = itemService.getAll();
+                items.setDataProvider(DataProvider.ofCollection(itemCollection));
+            });
+        }
+
+    }
 }

@@ -7,6 +7,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import kg.ksucta.kgfi.inventarization.domain.Category;
 import kg.ksucta.kgfi.inventarization.domain.RoleName;
+import kg.ksucta.kgfi.inventarization.repository.PersonRepository;
 import kg.ksucta.kgfi.inventarization.service.CategoryService;
 import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,21 +64,15 @@ public class AddCategoryView extends VerticalLayout implements View {
                 .bind(Category::getDescription, Category::setDescription);
         binder.addStatusChangeListener(
                 event -> save.setEnabled(binder.isValid()));
+        binder.setBean(new Category());
     }
 
     @Transactional
     private void saveCategory(){
-        Category category = getBindedCategory();
-        categoryService.saveCategory(category);
+        categoryService.saveCategory(binder.getBean());
         getUI().getNavigator().navigateTo(this.NAME);
     }
 
-    private Category getBindedCategory(){
-        Category category = new Category();
-        category.setName(name.getValue());
-        category.setDescription(categoryDescription.getValue());
-        return category;
-    }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
