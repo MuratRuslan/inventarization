@@ -9,8 +9,11 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.Person;
+import kg.ksucta.kgfi.inventarization.domain.Role;
+import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import kg.ksucta.kgfi.inventarization.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;

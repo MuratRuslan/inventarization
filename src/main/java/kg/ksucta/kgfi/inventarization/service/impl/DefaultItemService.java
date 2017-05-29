@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -84,5 +85,15 @@ public class DefaultItemService implements ItemService {
     @Override
     public void saveItem(Item item) {
         itemRepository.save(item);
+    }
+
+    @Override
+    public void removeItem(Item item) {
+        itemRepository.delete(item);
+    }
+
+    @Override
+    public void removeItems(Collection<Item> items) {
+        itemRepository.delete(items);
     }
 }

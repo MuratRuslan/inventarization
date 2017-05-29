@@ -46,17 +46,17 @@
 			<artifactId>vaadin-spring-boot-starter</artifactId>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.vaadin.addons</groupId>
 			<artifactId>exporter</artifactId>
 			<version>${pdfExporter.version}</version>
-		</dependency>
+		</dependency>-->
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<version>${flyway.version}</version>
-		</dependency>
+		</dependency>-->
 
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -74,11 +74,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
 			<version>${pdfBox.version}</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<dependencyManagement>

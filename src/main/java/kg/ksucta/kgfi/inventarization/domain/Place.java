@@ -16,7 +16,7 @@ public class Place {
     private
     String name;
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
+    @OneToMany(mappedBy = "place")
     private
     List<Item> items;
 

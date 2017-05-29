@@ -5,6 +5,7 @@ import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.Place;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -26,4 +27,6 @@ public interface ItemService {
     List<Item> getItemsByCostCheaperThan(BigDecimal cost);
     List<Item> getAll();
     void saveItem(Item item);
+    void removeItem(Item item);
+    void removeItems(Collection<Item> items);
 }

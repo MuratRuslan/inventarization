@@ -10,6 +10,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
+import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.security.access.annotation.Secured;
@@ -45,6 +46,14 @@ public class SearchItemView extends VerticalLayout implements View {
     private void init() {
         initComponents();
         addComponents(filterTextField, items);
+        if (hasRole(RoleName.ADMIN.name()) || hasRole(RoleName.OPERATOR.name())) {
+            addComponent(new Button("remove",
+                    clickEvent -> {
+                        Notification.show(items.getSelectedItems().iterator().next().getId().toString());
+                        itemService.removeItems(items.getSelectedItems());
+                        getUI().getNavigator().navigateTo(NAME);
+                    }));
+        }
     }
 
     @Override
@@ -66,7 +75,7 @@ public class SearchItemView extends VerticalLayout implements View {
         items.addColumn(Item::getRegistrationDate).setCaption("Registration date");
         items.addColumn(Item::getDescription).setCaption("Description");
         items.setSizeFull();
-
+        items.setSelectionMode(Grid.SelectionMode.MULTI);
         items.addItemClickListener(itemClick -> showItemEdit(itemClick.getItem()));
         filterTextField = (TextField) buildFilter();
     }
