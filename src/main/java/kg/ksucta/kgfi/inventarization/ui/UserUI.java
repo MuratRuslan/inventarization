@@ -6,6 +6,8 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import kg.ksucta.kgfi.inventarization.domain.RoleName;
+import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
 import kg.ksucta.kgfi.inventarization.view.RegistrationItemView;
 import kg.ksucta.kgfi.inventarization.view.SearchItemView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class UserUI extends UI{
 
     @Override
     protected void init(VaadinRequest request) {
+        showUI();
         final VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
         springViewDisplay = new Panel();
@@ -42,5 +45,16 @@ public class UserUI extends UI{
 
         button.addClickListener(event -> navigator.navigateTo(viewName) );
         return button;
+    }
+
+    private void showUI() {
+        if(SecurityUtils.hasRole(RoleName.ADMIN.name())) {
+            getPage().setLocation("/admin");
+            return;
+        }
+        if (SecurityUtils.hasRole(RoleName.OPERATOR.name())) {
+            getPage().setLocation("/operator");
+            return;
+        }
     }
 }

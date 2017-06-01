@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by samsung on 12.05.2017.
  */
-public interface ItemService {
+public interface ItemService extends Service<Item> {
     Item getItemById(Long id);
     Set<Item> getItemsInPlace(Place place);
     Set<Item> getItemsByCategory(Category category);
@@ -25,8 +25,4 @@ public interface ItemService {
     Item getItemByArticleNumber(String inventarNumber);
     List<Item> getItemsByCostMoreExpensiveThan(BigDecimal cost);
     List<Item> getItemsByCostCheaperThan(BigDecimal cost);
-    List<Item> getAll();
-    void saveItem(Item item);
-    void removeItem(Item item);
-    void removeItems(Collection<Item> items);
 }

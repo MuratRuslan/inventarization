@@ -16,9 +16,11 @@ import kg.ksucta.kgfi.inventarization.service.ItemService;
 import kg.ksucta.kgfi.inventarization.service.PlaceService;
 import org.omg.CORBA.NO_IMPLEMENT;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.concurrent.atomic.DoubleAccumulator;
@@ -70,7 +72,9 @@ public class RegistrationItemView extends VerticalLayout implements View {
             try {
                 saveItem();
                 Notification.show("Success");
-            } catch (ValidationException e) {
+            } catch (DataIntegrityViolationException e){
+                Notification.show("Article number already exist");
+            } catch (Exception e) {
                 Notification.show("Failed");
             }
         });
@@ -126,7 +130,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
             binder.writeBean(item);
         }
         item.setRegistrationDate(new Date());
-        itemService.saveItem(item);
+        itemService.save(item);
         if (getParent() instanceof Window) {
             ((Window) getParent()).close();
         } else {

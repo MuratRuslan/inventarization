@@ -5,6 +5,7 @@ import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.Place;
 import kg.ksucta.kgfi.inventarization.repository.ItemRepository;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,17 +84,17 @@ public class DefaultItemService implements ItemService {
     }
 
     @Override
-    public void saveItem(Item item) {
-        itemRepository.save(item);
+    public void save(Item item) {
+            itemRepository.save(item);
     }
 
     @Override
-    public void removeItem(Item item) {
+    public void remove(Item item) {
         itemRepository.delete(item);
     }
 
     @Override
-    public void removeItems(Collection<Item> items) {
+    public void remove(Collection<Item> items) {
         itemRepository.delete(items);
     }
 }

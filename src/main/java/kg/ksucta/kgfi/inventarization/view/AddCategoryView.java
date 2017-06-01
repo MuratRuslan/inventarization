@@ -53,7 +53,10 @@ public class AddCategoryView extends VerticalLayout implements View {
 
     }
 
-
+    public void setCategory(Category category) {
+        binder.readBean(category);
+        binder.setBean(category);
+    }
 
     private void initBinder(){
         binder = new Binder<>();
@@ -69,9 +72,10 @@ public class AddCategoryView extends VerticalLayout implements View {
 
     @Transactional
     private void saveCategory(){
-        categoryService.saveCategory(binder.getBean());
+        categoryService.save(binder.getBean());
         getUI().getNavigator().navigateTo(this.NAME);
     }
+
 
 
     @Override

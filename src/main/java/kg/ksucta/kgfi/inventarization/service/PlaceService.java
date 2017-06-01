@@ -7,10 +7,8 @@ import java.util.List;
 /**
  * Created by samsung on 12.05.2017.
  */
-public interface PlaceService {
+public interface PlaceService extends Service<Place> {
     List<Place> getAll();
 
     Place getByName(String name);
-
-    void savePlace(Place place);
 }

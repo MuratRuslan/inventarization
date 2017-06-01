@@ -89,7 +89,7 @@ public class RegistrationUserView extends VerticalLayout implements View {
     @Transactional
     private void savePerson() {
         Person person = getBindedPerson();
-        personService.savePerson(person);
+        personService.save(person);
         getUI().getNavigator().navigateTo(this.NAME);
     }
 

@@ -39,8 +39,7 @@ public class SearchUserView extends VerticalLayout implements View {
     @PostConstruct
     private void init() {
         initComponents();
-        addComponents(filterTextField, personGrid);
-
+        addComponents(filterTextField, personGrid, buildRemoveButton());
     }
 
     @Override
@@ -56,6 +55,7 @@ public class SearchUserView extends VerticalLayout implements View {
         personGrid.addColumn(Person::getLastname).setCaption("surname");
         personGrid.addColumn(Person::getLogin).setCaption("login");
         personGrid.setSizeFull();
+        personGrid.setSelectionMode(Grid.SelectionMode.MULTI);
 
         filterTextField = (TextField) buildFilter();
     }
@@ -77,6 +77,14 @@ public class SearchUserView extends VerticalLayout implements View {
         filter.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
         return filter;
     }
+
+    private Component buildRemoveButton() {
+        return new Button("remove", clickEvent -> {
+            personService.remove(personGrid.getSelectedItems());
+            getUI().getNavigator().navigateTo(NAME);
+        });
+    }
+
 
     private <T> boolean passesFilter(T subject) {
         if (subject == null) {

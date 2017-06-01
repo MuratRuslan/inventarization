@@ -6,6 +6,7 @@ import kg.ksucta.kgfi.inventarization.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,7 +28,17 @@ public class DefaultPlaceService implements PlaceService {
     }
 
     @Override
-    public void savePlace(Place place) {
+    public void save(Place place) {
         placeRepository.save(place);
+    }
+
+    @Override
+    public void remove(Place place) {
+        placeRepository.delete(place);
+    }
+
+    @Override
+    public void remove(Collection<Place> places) {
+        placeRepository.delete(places);
     }
 }

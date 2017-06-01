@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -30,10 +31,20 @@ public class DefaultPersonService implements PersonService {
     }
 
     @Override
-    public void savePerson(Person person) {
+    public void save(Person person) {
         String password = person.getPassword();
         person.setPassword(Base64.getEncoder().encodeToString(password.getBytes()));
         personRepository.save(person);
+    }
+
+    @Override
+    public void remove(Person person) {
+        personRepository.delete(person);
+    }
+
+    @Override
+    public void remove(Collection<Person> personCollection) {
+        personRepository.delete(personCollection);
     }
 
     @Override

@@ -42,6 +42,8 @@ public class LoginUI extends UI {
         setContent(layout);
     }
 
+
+
     private boolean login(String username, String password) {
         try {
             password = Base64.getEncoder().encodeToString(password.getBytes());

@@ -6,6 +6,7 @@ import kg.ksucta.kgfi.inventarization.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,7 +28,17 @@ public class DefaultCategoryService implements CategoryService {
     }
 
     @Override
-    public void saveCategory(Category category) {
+    public void save(Category category) {
         categoryRepository.save(category);
+    }
+
+    @Override
+    public void remove(Category category) {
+        categoryRepository.delete(category);
+    }
+
+    @Override
+    public void remove(Collection<Category> categories) {
+        categoryRepository.delete(categories);
     }
 }

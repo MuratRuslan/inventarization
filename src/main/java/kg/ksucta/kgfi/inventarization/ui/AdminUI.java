@@ -34,8 +34,10 @@ public class AdminUI extends UI {
         add.addItem("Place", menuItem -> navigator.navigateTo(AddPlaceView.NAME));
         add.addItem("Item", menuItem -> navigator.navigateTo(RegistrationItemView.NAME));
         add.addItem("User", menuItem -> navigator.navigateTo(RegistrationUserView.NAME));
-        menuBar.addItem("Search items", menuItem -> navigator.navigateTo(SearchItemView.NAME));
-        menuBar.addItem("Seach user", menuItem -> navigator.navigateTo(SearchUserView.NAME));
+        MenuBar.MenuItem search = menuBar.addItem("Search", null);
+        search.addItem("Item", menuItem -> navigator.navigateTo(SearchItemView.NAME));
+        search.addItem("Category", menuItem -> navigator.navigateTo(SearchCategoryView.NAME));
+        search.addItem("User", menuItem -> navigator.navigateTo(SearchUserView.NAME));
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponents(menuBar, springViewDisplay);
         setContent(verticalLayout);

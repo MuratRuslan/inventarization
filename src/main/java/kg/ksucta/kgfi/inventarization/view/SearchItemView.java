@@ -4,12 +4,17 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.Resource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.RoleName;
+import kg.ksucta.kgfi.inventarization.service.ExportToDocumentService;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
+import kg.ksucta.kgfi.inventarization.service.impl.ExportToCSVDocument;
+import kg.ksucta.kgfi.inventarization.service.impl.ExportToPDFDocument;
 import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
@@ -17,6 +22,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -33,7 +41,10 @@ public class SearchItemView extends VerticalLayout implements View {
     private TextField filterTextField;
     private Collection<Item> itemCollection;
     private Grid<Item> items;
+    private NativeSelect<ExportToDocumentService> documentSelect;
+    private Button download = new Button("download");
     private ListDataProvider<Item> dataProvider;
+    private FileDownloader fileDownloader;
 
     @Autowired
     private RegistrationItemView registrationItemView;
@@ -41,19 +52,18 @@ public class SearchItemView extends VerticalLayout implements View {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private ExportToCSVDocument exportToCSVDocument;
+    @Autowired
+    private ExportToPDFDocument exportToPDFDocument;
+
 
     @PostConstruct
     private void init() {
         initComponents();
-        addComponents(filterTextField, items);
-        if (hasRole(RoleName.ADMIN.name()) || hasRole(RoleName.OPERATOR.name())) {
-            addComponent(new Button("remove",
-                    clickEvent -> {
-                        Notification.show(items.getSelectedItems().iterator().next().getId().toString());
-                        itemService.removeItems(items.getSelectedItems());
-                        getUI().getNavigator().navigateTo(NAME);
-                    }));
-        }
+        addComponents(
+                new HorizontalLayout(filterTextField, documentSelect, download),
+                items);
     }
 
     @Override
@@ -61,6 +71,9 @@ public class SearchItemView extends VerticalLayout implements View {
         itemCollection = itemService.getAll();
         dataProvider = DataProvider.ofCollection(itemCollection);
         items.setDataProvider(dataProvider);
+        addDownloadListener();
+        if (hasRole(RoleName.ADMIN.name()) || hasRole(RoleName.OPERATOR.name()))
+            buildRemoveButton();
     }
 
     private void initComponents() {
@@ -78,6 +91,11 @@ public class SearchItemView extends VerticalLayout implements View {
         items.setSelectionMode(Grid.SelectionMode.MULTI);
         items.addItemClickListener(itemClick -> showItemEdit(itemClick.getItem()));
         filterTextField = (TextField) buildFilter();
+        documentSelect = new NativeSelect<>();
+        documentSelect.setItems(new ArrayList<>(
+                Arrays.asList(exportToCSVDocument, exportToPDFDocument)));
+        documentSelect.setSelectedItem(exportToPDFDocument);
+        documentSelect.setEmptySelectionAllowed(false);
     }
 
     private Component buildFilter() {
@@ -91,6 +109,8 @@ public class SearchItemView extends VerticalLayout implements View {
 
             dataProvider = DataProvider.ofCollection(transactions);
             items.setDataProvider(dataProvider);
+            fileDownloader.setFileDownloadResource(
+                    documentSelect.getValue().export(dataProvider.getItems()));
         });
 
         filter.setPlaceholder("Filter");
@@ -106,13 +126,33 @@ public class SearchItemView extends VerticalLayout implements View {
                 .contains(filterTextField.getValue().toLowerCase());
     }
 
+    private Component buildRemoveButton() {
+        Button remove = new Button("remove",
+                clickEvent -> {
+                    Notification.show(items.getSelectedItems().iterator().next().getId().toString());
+                    itemService.remove(items.getSelectedItems());
+                    getUI().getNavigator().navigateTo(NAME);
+                });
+        addComponent(remove);
+        return remove;
+    }
+
+    private void addDownloadListener() {
+        fileDownloader = new FileDownloader(documentSelect.getValue().export(dataProvider.getItems()));
+        fileDownloader.extend(download);
+        documentSelect.addValueChangeListener(e ->
+                fileDownloader.setFileDownloadResource(
+                        documentSelect.getValue().export(dataProvider.getItems())));
+    }
+
 
     private void showItemEdit(Item item) {
         if (hasRole(RoleName.OPERATOR.name()) || hasRole(RoleName.ADMIN.name())) {
             Window editWindow = new Window("Edit item");
             editWindow.setContent(registrationItemView);
             registrationItemView.setItem(item);
-            getUI().addWindow(editWindow);
+            if(getUI().getWindows().size() == 0)
+                getUI().addWindow(editWindow);
             editWindow.center();
             editWindow.setHeight("70%");
             editWindow.addCloseListener(closeEvent -> {
@@ -120,6 +160,5 @@ public class SearchItemView extends VerticalLayout implements View {
                 items.setDataProvider(DataProvider.ofCollection(itemCollection));
             });
         }
-
     }
 }

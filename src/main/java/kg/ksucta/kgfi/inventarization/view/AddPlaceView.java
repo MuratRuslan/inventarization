@@ -64,7 +64,7 @@ public class AddPlaceView extends VerticalLayout implements View {
 
     @Transactional
     private void saveCategory(){
-        placeService.savePlace(binder.getBean());
+        placeService.save(binder.getBean());
         getUI().getNavigator().navigateTo(this.NAME);
     }
 
