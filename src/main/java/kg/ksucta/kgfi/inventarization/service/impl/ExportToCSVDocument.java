@@ -6,7 +6,8 @@ import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.service.ExportToDocumentService;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Collection;
 
 
@@ -24,7 +25,8 @@ public class ExportToCSVDocument implements ExportToDocumentService {
                 ByteArrayInputStream inputStream = new ByteArrayInputStream(fullData.getBytes());
                 return inputStream;
             }
-        }, "list.csv");
+        }, "inventarization.csv");
+        csv.setMIMEType("text/csv");
         return csv;
     }
 

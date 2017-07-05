@@ -15,6 +15,7 @@ import kg.ksucta.kgfi.inventarization.service.ExportToDocumentService;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
 import kg.ksucta.kgfi.inventarization.service.impl.ExportToCSVDocument;
 import kg.ksucta.kgfi.inventarization.service.impl.ExportToPDFDocument;
+import kg.ksucta.kgfi.inventarization.service.impl.ExportToXSLDocument;
 import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
@@ -52,10 +53,9 @@ public class SearchItemView extends VerticalLayout implements View {
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-    private ExportToCSVDocument exportToCSVDocument;
-    @Autowired
-    private ExportToPDFDocument exportToPDFDocument;
+    @Autowired private ExportToCSVDocument exportToCSVDocument;
+    @Autowired private ExportToPDFDocument exportToPDFDocument;
+    @Autowired private ExportToXSLDocument exportToXSLDocument;
 
 
     @PostConstruct
@@ -93,7 +93,7 @@ public class SearchItemView extends VerticalLayout implements View {
         filterTextField = (TextField) buildFilter();
         documentSelect = new NativeSelect<>();
         documentSelect.setItems(new ArrayList<>(
-                Arrays.asList(exportToCSVDocument, exportToPDFDocument)));
+                Arrays.asList(exportToCSVDocument, exportToPDFDocument, exportToXSLDocument)));
         documentSelect.setSelectedItem(exportToPDFDocument);
         documentSelect.setEmptySelectionAllowed(false);
     }
@@ -148,17 +148,18 @@ public class SearchItemView extends VerticalLayout implements View {
 
     private void showItemEdit(Item item) {
         if (hasRole(RoleName.OPERATOR.name()) || hasRole(RoleName.ADMIN.name())) {
-            Window editWindow = new Window("Edit item");
-            editWindow.setContent(registrationItemView);
-            registrationItemView.setItem(item);
-            if(getUI().getWindows().size() == 0)
+            if (getUI().getWindows().isEmpty()) {
+                Window editWindow = new Window("Edit item");
+                editWindow.setContent(registrationItemView);
                 getUI().addWindow(editWindow);
-            editWindow.center();
-            editWindow.setHeight("70%");
-            editWindow.addCloseListener(closeEvent -> {
-                itemCollection = itemService.getAll();
-                items.setDataProvider(DataProvider.ofCollection(itemCollection));
-            });
+                editWindow.center();
+                editWindow.setHeight("70%");
+                editWindow.addCloseListener(closeEvent -> {
+                    itemCollection = itemService.getAll();
+                    items.setDataProvider(DataProvider.ofCollection(itemCollection));
+                });
+            }
+            registrationItemView.setItem(item);
         }
     }
 }

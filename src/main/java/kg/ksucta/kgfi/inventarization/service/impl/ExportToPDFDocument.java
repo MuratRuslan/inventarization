@@ -52,19 +52,16 @@ public class ExportToPDFDocument implements ExportToDocumentService {
                 }
                 return inputStream;
             }
-        }, "my.pdf");
+        }, "inventarization.pdf");
     }
 
     private void write(PDPageContentStream contentStream, Collection<Item> data, PDPage page, PDDocument doc) throws IOException {
         float margin = 50;
         float yStartNewPage = page.getMediaBox().getHeight() - (2 * margin);
         float tableWidth = page.getMediaBox().getWidth() - (2 * margin);
-        boolean drawContent = true;
         float yStart = yStartNewPage;
         float bottomMargin = 70;
-        float yPosition = 550;
 
-        int indexing = 1;
         PDFont font = PDType1Font.HELVETICA_BOLD;
         contentStream.setFont(font, 30);
         String fullData = csv.createCSVsyntax(data);

@@ -62,7 +62,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
         cost.setValue("0");
         purchaseDate = new DateField("Purchase date");
         purchaseDate.setValue(null);
-        itemDescription = new TextArea("Description", "Type here description of the item");
+        itemDescription = new TextArea("Description");
         save = new Button("Save");
         save.setEnabled(false);
         binder.readBean(new Item());

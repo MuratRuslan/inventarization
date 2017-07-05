@@ -7,7 +7,6 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import kg.ksucta.kgfi.inventarization.domain.Category;
-import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import kg.ksucta.kgfi.inventarization.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
