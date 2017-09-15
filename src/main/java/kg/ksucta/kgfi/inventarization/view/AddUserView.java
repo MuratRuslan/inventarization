@@ -1,7 +1,6 @@
 package kg.ksucta.kgfi.inventarization.view;
 
 import com.vaadin.data.Binder;
-import com.vaadin.data.provider.DataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -11,7 +10,6 @@ import kg.ksucta.kgfi.inventarization.domain.Role;
 import kg.ksucta.kgfi.inventarization.service.PersonService;
 import kg.ksucta.kgfi.inventarization.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.parsing.PassThroughSourceExtractor;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -20,8 +18,8 @@ import java.util.*;
 /**
  * Created by Baktiyar on 24.05.2017.
  */
-@SpringView(name = RegistrationUserView.NAME)
-public class RegistrationUserView extends VerticalLayout implements View {
+@SpringView(name = AddUserView.NAME)
+public class AddUserView extends VerticalLayout implements View {
     public static final String NAME="RegistrationUserView";
     private Label header;
     private TextField name;

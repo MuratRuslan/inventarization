@@ -72,4 +72,8 @@ public class AddPlaceView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
 
     }
+
+    public void setPlace(Place place) {
+
+    }
 }

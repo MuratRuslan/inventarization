@@ -14,23 +14,18 @@ import kg.ksucta.kgfi.inventarization.domain.Place;
 import kg.ksucta.kgfi.inventarization.service.CategoryService;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
 import kg.ksucta.kgfi.inventarization.service.PlaceService;
-import org.omg.CORBA.NO_IMPLEMENT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.validation.ConstraintViolationException;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.concurrent.atomic.DoubleAccumulator;
 
 /**
  * Created by samsung on 12.05.2017.
  */
-@SpringView(name = RegistrationItemView.NAME)
-public class RegistrationItemView extends VerticalLayout implements View {
-    public final static String NAME = "RegistrationItemView";
+@SpringView(name = AddItemView.NAME)
+public class AddItemView extends VerticalLayout implements View {
+    public final static String NAME = "AddItemView";
     private Label header;
     private TextField itemNumber;
     private TextField name;
@@ -51,7 +46,7 @@ public class RegistrationItemView extends VerticalLayout implements View {
     @Autowired
     private ItemService itemService;
 
-    public RegistrationItemView() {
+    public AddItemView() {
         setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         header = new Label("Item Registration");
         itemNumber = new TextField("Item number");

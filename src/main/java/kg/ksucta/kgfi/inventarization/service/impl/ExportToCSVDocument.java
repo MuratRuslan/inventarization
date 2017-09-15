@@ -16,6 +16,7 @@ public class ExportToCSVDocument implements ExportToDocumentService {
     private String comma = ",";
     private String newLIne = "\n";
     private String space= "       ";
+    private String semiColon=";";
     @Override
     public Resource export(Collection<Item> data) {
         StreamResource csv = new StreamResource(new StreamResource.StreamSource() {
@@ -36,8 +37,8 @@ public class ExportToCSVDocument implements ExportToDocumentService {
                 + "Category" + comma + "Cost" +space+ comma + "Registration Date" + newLIne);
         for (Item item : data) {
             fullData.append(index+comma);
-            fullData.append(item.getArticleNumber() + comma);
-            fullData.append(item.getName() + comma);
+            fullData.append(item.getArticleNumber().replaceAll(comma,semiColon) + comma);
+            fullData.append(item.getName().replaceAll(comma,semiColon) + comma);
             fullData.append(item.getCategory() + comma);
             fullData.append(item.getCost() + comma);
             fullData.append(item.getRegistrationDate() + comma);

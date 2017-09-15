@@ -1,11 +1,8 @@
 package kg.ksucta.kgfi.inventarization.ui;
 
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import kg.ksucta.kgfi.inventarization.view.*;
@@ -32,8 +29,8 @@ public class AdminUI extends UI {
         MenuBar.MenuItem add = menuBar.addItem("Add ...", null);
         add.addItem("Category", menuItem ->  navigator.navigateTo(AddCategoryView.NAME));
         add.addItem("Place", menuItem -> navigator.navigateTo(AddPlaceView.NAME));
-        add.addItem("Item", menuItem -> navigator.navigateTo(RegistrationItemView.NAME));
-        add.addItem("User", menuItem -> navigator.navigateTo(RegistrationUserView.NAME));
+        add.addItem("Item", menuItem -> navigator.navigateTo(AddItemView.NAME));
+        add.addItem("User", menuItem -> navigator.navigateTo(AddUserView.NAME));
         MenuBar.MenuItem search = menuBar.addItem("Search", null);
         search.addItem("Item", menuItem -> navigator.navigateTo(SearchItemView.NAME));
         search.addItem("Category", menuItem -> navigator.navigateTo(SearchCategoryView.NAME));

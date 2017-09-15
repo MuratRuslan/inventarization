@@ -1,16 +1,12 @@
 package kg.ksucta.kgfi.inventarization.ui;
 
-import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import kg.ksucta.kgfi.inventarization.view.RegistrationItemView;
+import kg.ksucta.kgfi.inventarization.view.AddItemView;
 import kg.ksucta.kgfi.inventarization.view.SearchItemView;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +30,7 @@ public class OperatorUI extends UI {
         navigator.addProvider(springViewProvider);
         final CssLayout navigationBar = new CssLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-        navigationBar.addComponent(createNavigationButton("Item Registration", RegistrationItemView.NAME));
+        navigationBar.addComponent(createNavigationButton("Item Registration", AddItemView.NAME));
         navigationBar.addComponent(createNavigationButton("Search item", SearchItemView.NAME));
         root.addComponents(navigationBar, springViewDisplay);
         root.setExpandRatio(springViewDisplay, 1.0f);

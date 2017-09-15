@@ -8,7 +8,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import kg.ksucta.kgfi.inventarization.domain.RoleName;
 import kg.ksucta.kgfi.inventarization.utils.SecurityUtils;
-import kg.ksucta.kgfi.inventarization.view.RegistrationItemView;
 import kg.ksucta.kgfi.inventarization.view.SearchItemView;
 import org.springframework.beans.factory.annotation.Autowired;
 
