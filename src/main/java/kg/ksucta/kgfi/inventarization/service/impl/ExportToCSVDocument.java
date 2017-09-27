@@ -34,14 +34,20 @@ public class ExportToCSVDocument implements ExportToDocumentService {
     public String createCSVsyntax(Collection<Item> data) {
         int index=1;
         StringBuilder fullData = new StringBuilder("N%" +space+ comma + "Article Number " + comma + "Name" + comma
-                + "Category" + comma + "Cost" +space+ comma + "Registration Date" + newLIne);
+               +"Place"+comma + "Category" + comma + "Cost EURO" +space+ comma + "Cost SOM" + comma+ "Registration Date" +
+                comma + "Author" +comma+"ISBN"+ newLIne);
         for (Item item : data) {
             fullData.append(index+comma);
             fullData.append(item.getArticleNumber().replaceAll(comma,semiColon) + comma);
             fullData.append(item.getName().replaceAll(comma,semiColon) + comma);
+            fullData.append(item.getPlace() + comma);
             fullData.append(item.getCategory() + comma);
             fullData.append(item.getCost() + comma);
+            fullData.append(item.getCostSom() + comma);
             fullData.append(item.getRegistrationDate() + comma);
+            if(item.getAuthor() == null) item.setAuthor("");
+            fullData.append(item.getAuthor().replaceAll(comma,semiColon) + comma);
+            fullData.append(item.getIsbn() + comma);
             fullData.append(newLIne);
             index++;
         }

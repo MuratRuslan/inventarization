@@ -76,13 +76,17 @@ public class SearchItemView extends VerticalLayout implements View {
         items.addColumn(Item::getArticleNumber).setCaption("Article number");
         items.addColumn(Item::getCategory).setCaption("Category");
         items.addColumn(Item::getPlace).setCaption("Place");
-        items.addColumn(Item::getCost).setCaption("Cost");
+        items.addColumn(Item::getCost).setCaption("Cost EURO");
+        items.addColumn(Item::getCostSom).setCaption("Cost SOM");
+        items.addColumn(Item::getAuthor).setCaption("Author");
+        items.addColumn(Item::getIsbn).setCaption("ISBN");
         items.addColumn(Item::getPurchaseDate).setCaption("Purchase date");
         items.addColumn(Item::getRegistrationDate).setCaption("Registration date");
         items.addColumn(Item::getDescription).setCaption("Description");
         items.setSizeFull();
         items.setSelectionMode(Grid.SelectionMode.SINGLE);
         items.addItemClickListener(itemClick -> showItemEdit(itemClick.getItem()));
+        items.setSelectionMode(Grid.SelectionMode.SINGLE);
         filterTextField = (TextField) buildFilter();
         documentSelect = new NativeSelect<>();
         documentSelect.setItems(new ArrayList<>(

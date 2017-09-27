@@ -17,18 +17,20 @@ public class Item {
     private Date registrationDate;
     private String description;
     @Column(nullable = false)
-    private String name;
+    private String name = "";
     @Column(nullable = false, unique = true)
     private String articleNumber;
-    private BigDecimal cost;
+    private BigDecimal cost = new BigDecimal(0);
+    @Column()
+    private BigDecimal costSom = new BigDecimal(0);
     @ManyToOne
     @JoinColumn(name = "place")
     private Place place;
     @ManyToOne
     @JoinColumn(name = "category")
     private Category category;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-    private List<Image> images;
+    private String isbn = "";
+    private String author = "";
 
 
     public Long getId() {
@@ -103,11 +105,27 @@ public class Item {
         this.category = category;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public BigDecimal getCostSom() {
+        return costSom;
+    }
+
+    public void setCostSom(BigDecimal costSom) {
+        this.costSom = costSom;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

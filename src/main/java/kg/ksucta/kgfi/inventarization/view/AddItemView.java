@@ -30,12 +30,15 @@ public class AddItemView extends VerticalLayout implements View {
     private TextField itemNumber;
     private TextField name;
     private TextField cost;
+    private TextField costSom;
     private ComboBox<Category> category;
     private ComboBox<Place> place;
     private DateField purchaseDate;
     private TextArea itemDescription;
     private Button save;
     private Binder<Item> binder = new Binder<>();
+    private TextField author;
+    private TextField isbn;
 
     @Autowired
     private CategoryService categoryService;
@@ -53,8 +56,11 @@ public class AddItemView extends VerticalLayout implements View {
         name = new TextField("Name");
         category = new ComboBox<>("Choose category");
         place = new ComboBox<>("Place");
-        cost = new TextField("Cost");
-        cost.setValue("0");
+        cost = new TextField("Cost EURO");
+        costSom = new TextField("Cost SOM");
+        author = new TextField("Author");
+        isbn = new TextField("ISBN");
+        isbn.setValue("");
         purchaseDate = new DateField("Purchase date");
         purchaseDate.setValue(null);
         itemDescription = new TextArea("Description");
@@ -74,7 +80,16 @@ public class AddItemView extends VerticalLayout implements View {
             }
         });
 
-        addComponents(header, itemNumber, name, category, place, cost,
+        category.addSelectionListener(e -> {
+            if (e.getValue().getName().equals("Book")) {
+                addComponent(author, 3);
+                addComponent(isbn, 4);
+                return;
+            }
+            removeComponent(author);
+        });
+
+        addComponents(header, itemNumber, name, category, place, cost, costSom,
                 purchaseDate, itemDescription, save);
     }
 
@@ -104,6 +119,10 @@ public class AddItemView extends VerticalLayout implements View {
                 .withConverter(
                         new StringToBigDecimalConverter("Must enter a number"))
                 .bind(Item::getCost, Item::setCost);
+        binder.forField(costSom)
+                .withConverter(
+                        new StringToBigDecimalConverter("Must enter a number"))
+                .bind(Item::getCostSom, Item::setCostSom);
 
         binder.forField(purchaseDate)
                 .withConverter(new LocalDateToDateConverter())
@@ -111,6 +130,10 @@ public class AddItemView extends VerticalLayout implements View {
 
         binder.forField(itemDescription)
                 .bind(Item::getDescription, Item::setDescription);
+        binder.forField(author)
+                .bind(Item::getAuthor, Item::setAuthor);
+        binder.forField(isbn)
+                .bind(Item::getIsbn, Item::setIsbn);
 
         binder.addStatusChangeListener(
                 event -> save.setEnabled(binder.isValid()));
