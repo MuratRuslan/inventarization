@@ -20,7 +20,7 @@ import static kg.ksucta.kgfi.inventarization.utils.SecurityUtils.hasRole;
  * Created by murat on 7/5/17.
  */
 public class SearchPlaceView extends VerticalLayout implements View {
-    public final static String NAME = "Search Place";
+    public final static String NAME = "Search Place ";
     private TextField filterTextField;
     private Grid<Place> placeGrid;
 
