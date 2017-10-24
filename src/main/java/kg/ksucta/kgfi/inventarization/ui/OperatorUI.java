@@ -6,6 +6,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import kg.ksucta.kgfi.inventarization.utils.VaadinComponentHelper;
 import kg.ksucta.kgfi.inventarization.view.AddItemView;
 import kg.ksucta.kgfi.inventarization.view.SearchItemView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class OperatorUI extends UI {
     @Autowired private SpringViewProvider springViewProvider;
     private Panel springViewDisplay;
     private Navigator navigator;
+    private Button logout;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -36,6 +38,7 @@ public class OperatorUI extends UI {
         root.setExpandRatio(springViewDisplay, 1.0f);
 
         setContent(root);
+        logout = VaadinComponentHelper.buildLogoutButton(this);
     }
 
     private Button createNavigationButton(String caption, final String viewName) {

@@ -11,9 +11,11 @@ import com.vaadin.ui.*;
 import kg.ksucta.kgfi.inventarization.domain.Category;
 import kg.ksucta.kgfi.inventarization.domain.Item;
 import kg.ksucta.kgfi.inventarization.domain.Place;
+import kg.ksucta.kgfi.inventarization.domain.Project;
 import kg.ksucta.kgfi.inventarization.service.CategoryService;
 import kg.ksucta.kgfi.inventarization.service.ItemService;
 import kg.ksucta.kgfi.inventarization.service.PlaceService;
+import kg.ksucta.kgfi.inventarization.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +41,8 @@ public class AddItemView extends VerticalLayout implements View {
     private Binder<Item> binder = new Binder<>();
     private TextField author;
     private TextField isbn;
+    private ComboBox<Project> project;
+    private TextField secondArtikelNumber = new TextField("second Art Number");
 
     @Autowired
     private CategoryService categoryService;
@@ -48,6 +52,9 @@ public class AddItemView extends VerticalLayout implements View {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private ProjectService projectService;
 
     public AddItemView() {
         setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -64,6 +71,7 @@ public class AddItemView extends VerticalLayout implements View {
         purchaseDate = new DateField("Purchase date");
         purchaseDate.setValue(null);
         itemDescription = new TextArea("Description");
+        project = new ComboBox<Project>("Project");
         save = new Button("Save");
         save.setEnabled(false);
         binder.readBean(new Item());
@@ -73,7 +81,7 @@ public class AddItemView extends VerticalLayout implements View {
             try {
                 saveItem();
                 Notification.show("Success");
-            } catch (DataIntegrityViolationException e){
+            } catch (DataIntegrityViolationException e) {
                 Notification.show("Article number already exist");
             } catch (Exception e) {
                 Notification.show("Failed");
@@ -89,8 +97,8 @@ public class AddItemView extends VerticalLayout implements View {
             removeComponent(author);
         });
 
-        addComponents(header, itemNumber, name, category, place, cost, costSom,
-                purchaseDate, itemDescription, save);
+        addComponents(header, name, itemNumber, secondArtikelNumber, category, place, cost, costSom,
+                purchaseDate, itemDescription, project, save);
     }
 
 
@@ -98,6 +106,7 @@ public class AddItemView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         category.setItems(categoryService.getAll());
         place.setItems(placeService.getAll());
+        project.setItems(projectService.getAll());
     }
 
     private void initBinder() {
@@ -111,6 +120,9 @@ public class AddItemView extends VerticalLayout implements View {
 
         binder.forField(category)
                 .bind(Item::getCategory, Item::setCategory);
+
+        binder.forField(project)
+                .bind(Item::getProject, Item::setProject);
 
         binder.forField(place)
                 .bind(Item::getPlace, Item::setPlace);
@@ -132,8 +144,11 @@ public class AddItemView extends VerticalLayout implements View {
                 .bind(Item::getDescription, Item::setDescription);
         binder.forField(author)
                 .bind(Item::getAuthor, Item::setAuthor);
+
         binder.forField(isbn)
                 .bind(Item::getIsbn, Item::setIsbn);
+        binder.forField(secondArtikelNumber)
+                .bind(Item::getSecondArtikelNumber, Item::setSecondArtikelNumber);
 
         binder.addStatusChangeListener(
                 event -> save.setEnabled(binder.isValid()));
@@ -162,5 +177,6 @@ public class AddItemView extends VerticalLayout implements View {
         binder.setBean(item);
         category.setItems(categoryService.getAll());
         place.setItems(placeService.getAll());
+        project.setItems(projectService.getAll());
     }
 }

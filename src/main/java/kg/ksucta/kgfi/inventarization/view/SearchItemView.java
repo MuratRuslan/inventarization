@@ -74,6 +74,7 @@ public class SearchItemView extends VerticalLayout implements View {
         TextField itemName = new TextField("Name");
         items.addColumn(Item::getName).setCaption("Item name").setEditorComponent(itemName, Item::setName);
         items.addColumn(Item::getArticleNumber).setCaption("Article number");
+        items.addColumn(Item::getSecondArtikelNumber).setCaption("Second Art number");
         items.addColumn(Item::getCategory).setCaption("Category");
         items.addColumn(Item::getPlace).setCaption("Place");
         items.addColumn(Item::getCost).setCaption("Cost EURO");
@@ -82,6 +83,7 @@ public class SearchItemView extends VerticalLayout implements View {
         items.addColumn(Item::getIsbn).setCaption("ISBN");
         items.addColumn(Item::getPurchaseDate).setCaption("Purchase date");
         items.addColumn(Item::getRegistrationDate).setCaption("Registration date");
+        items.addColumn(Item::getProject).setCaption("Project");
         items.addColumn(Item::getDescription).setCaption("Description");
         items.setSizeFull();
         items.setSelectionMode(Grid.SelectionMode.SINGLE);
@@ -102,6 +104,8 @@ public class SearchItemView extends VerticalLayout implements View {
                     .stream().filter(item -> passesFilter(item.getName())
                             || passesFilter(item.getArticleNumber())
                             || passesFilter(item.getCategory())
+                            || passesFilter(item.getProject())
+                            || passesFilter(item.getAuthor())
                             || passesFilter(item.getPlace())).collect(Collectors.toList());
 
             dataProvider = DataProvider.ofCollection(transactions);

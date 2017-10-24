@@ -31,6 +31,11 @@ public class Item {
     private Category category;
     private String isbn = "";
     private String author = "";
+    private String secondArtikelNumber = "";
+
+    @ManyToOne
+    @JoinColumn(name = "project")
+    private Project project;
 
 
     public Long getId() {
@@ -82,6 +87,7 @@ public class Item {
     }
 
     public BigDecimal getCost() {
+        if (null == cost) return new BigDecimal(0);
         return cost;
     }
 
@@ -106,6 +112,7 @@ public class Item {
     }
 
     public String getIsbn() {
+        if(isbn == null) return "";
         return isbn;
     }
 
@@ -114,6 +121,7 @@ public class Item {
     }
 
     public BigDecimal getCostSom() {
+        if(costSom == null) return new BigDecimal(0);
         return costSom;
     }
 
@@ -122,10 +130,28 @@ public class Item {
     }
 
     public String getAuthor() {
+        if(author == null) return "";
         return author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public String getSecondArtikelNumber() {
+        if(secondArtikelNumber == null) return "";
+        return secondArtikelNumber;
+    }
+
+    public void setSecondArtikelNumber(String secondArtikelNumber) {
+        this.secondArtikelNumber = secondArtikelNumber;
     }
 }

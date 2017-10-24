@@ -15,6 +15,6 @@ public interface PlaceRepository extends JpaRepository<Place, Integer> {
     Place findByName(String name);
 
     @Override
-    @Cacheable("places")
+    //@Cacheable("places")
     List<Place> findAll();
 }
