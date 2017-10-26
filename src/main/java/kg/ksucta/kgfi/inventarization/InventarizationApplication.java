@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import java.util.Random;
 
 @SpringBootApplication
-//@EnableCaching
+@EnableCaching
 public class InventarizationApplication {
 
 

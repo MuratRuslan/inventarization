@@ -30,6 +30,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findByCostLessThanEqual(BigDecimal cost);
 
     @Override
-    @Cacheable("items")
     List<Item> findAll();
 }

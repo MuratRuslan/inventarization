@@ -156,8 +156,9 @@ public class SearchItemView extends VerticalLayout implements View {
                 editWindow.center();
                 editWindow.setHeight("70%");
                 editWindow.addCloseListener(closeEvent -> {
-                    itemCollection = itemService.getAll();
-                    items.setDataProvider(DataProvider.ofCollection(itemCollection));
+//                    itemCollection = itemService.getAll();
+//                    items.setDataProvider(DataProvider.ofCollection(itemCollection));
+                    items.getDataProvider().refreshAll();
                 });
             }
             addItemView.setItem(item);
