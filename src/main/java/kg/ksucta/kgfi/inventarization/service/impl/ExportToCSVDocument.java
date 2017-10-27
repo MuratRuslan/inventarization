@@ -40,7 +40,7 @@ public class ExportToCSVDocument implements ExportToDocumentService {
         for (Item item : data) {
             fullData.append(index + comma);
             fullData.append(item.getArticleNumber().replaceAll(comma, semiColon) + comma);
-            fullData.append(item.getSecondArtikelNumber());
+            fullData.append(item.getSecondArtikelNumber()==null?"":item.getSecondArtikelNumber()+comma);
             fullData.append(item.getName().replaceAll(comma, semiColon) + comma);
             fullData.append(item.getPlace() + comma);
             fullData.append(item.getCategory() + comma);
@@ -50,7 +50,8 @@ public class ExportToCSVDocument implements ExportToDocumentService {
             if (item.getAuthor() == null) item.setAuthor("");
             fullData.append(item.getAuthor().replaceAll(comma, semiColon) + comma);
             fullData.append(item.getIsbn() + comma);
-            fullData.append(item.getProject().getName()+comma);
+            if (item.getProject()!=null)
+                fullData.append(item.getProject().getName()+comma);
             fullData.append(item.getPurchaseDate()+comma);
             fullData.append(item.getDescription()+comma);
             fullData.append(item.getAuthor());

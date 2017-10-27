@@ -151,6 +151,8 @@ public class Item {
         return secondArtikelNumber;
     }
 
+
+
     public void setSecondArtikelNumber(String secondArtikelNumber) {
         this.secondArtikelNumber = secondArtikelNumber;
     }

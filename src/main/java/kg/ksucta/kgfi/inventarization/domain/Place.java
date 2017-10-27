@@ -14,7 +14,7 @@ public class Place {
     Integer id;
     @Column(nullable = false)
     private
-    String name;
+    String name="";
     private String description;
     @OneToMany(mappedBy = "place")
     private
