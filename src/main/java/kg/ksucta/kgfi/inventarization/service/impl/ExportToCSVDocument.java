@@ -36,25 +36,25 @@ public class ExportToCSVDocument implements ExportToDocumentService {
         int index = 1;
         StringBuilder fullData = new StringBuilder("N%" + space + comma + "Article Number " + comma + "Second Article N" + comma + "Name" + comma
                 + "Place" + comma + "Category" + comma + "Cost EURO" + space + comma + "Cost SOM" + comma + "Registration Date" +
-                comma + "Author" + comma + "ISBN" + comma + "Project" +comma+"Purchase Date"+comma+"Description"+ comma+"Author"+newLIne);
+                comma + "Author" + comma + "ISBN" + comma + "Project" +comma+"Purchase Date"+comma+"Description"+newLIne);
         for (Item item : data) {
             fullData.append(index + comma);
             fullData.append(item.getArticleNumber().replaceAll(comma, semiColon) + comma);
-            fullData.append(item.getSecondArtikelNumber()==null?"":item.getSecondArtikelNumber()+comma);
+            fullData.append(getString(item.getSecondArtikelNumber()+comma));
             fullData.append(item.getName().replaceAll(comma, semiColon) + comma);
-            fullData.append(item.getPlace() + comma);
-            fullData.append(item.getCategory() + comma);
-            fullData.append(item.getCost() + comma);
+            fullData.append(getString(item.getPlace()) + comma);
+            fullData.append(getString(item.getCategory()) + comma);
+            fullData.append(getString(item.getCost()) + comma);
             fullData.append(item.getCostSom() + comma);
             fullData.append(item.getRegistrationDate() + comma);
-            if (item.getAuthor() == null) item.setAuthor("");
-            fullData.append(item.getAuthor().replaceAll(comma, semiColon) + comma);
+//            if (item.getAuthor() == null) item.setAuthor("");
+            fullData.append(getString(item.getAuthor()).replaceAll(comma, semiColon) + comma);
             fullData.append(item.getIsbn() + comma);
-            if (item.getProject()!=null)
-                fullData.append(item.getProject().getName()+comma);
+//            if (item.getProject()!=null)
+                fullData.append(getString(item.getProject().getName())+comma);
             fullData.append(item.getPurchaseDate()+comma);
             fullData.append(item.getDescription()+comma);
-            fullData.append(item.getAuthor());
+//            fullData.append(getString(item.getAuthor());
             fullData.append(newLIne);
             index++;
         }
@@ -64,5 +64,10 @@ public class ExportToCSVDocument implements ExportToDocumentService {
     @Override
     public String toString() {
         return "CSV";
+    }
+
+    public String getString(Object o) {
+        if(o == null) return "";
+        return o.toString();
     }
 }
