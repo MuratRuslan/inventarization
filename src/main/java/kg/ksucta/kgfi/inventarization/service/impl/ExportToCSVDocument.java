@@ -15,8 +15,9 @@ import java.util.Collection;
 public class ExportToCSVDocument implements ExportToDocumentService {
     private String comma = ",";
     private String newLIne = "\n";
-    private String space= "       ";
-    private String semiColon=";";
+    private String space = "       ";
+    private String semiColon = ";";
+
     @Override
     public Resource export(Collection<Item> data) {
         StreamResource csv = new StreamResource(new StreamResource.StreamSource() {
@@ -32,22 +33,27 @@ public class ExportToCSVDocument implements ExportToDocumentService {
     }
 
     public String createCSVsyntax(Collection<Item> data) {
-        int index=1;
-        StringBuilder fullData = new StringBuilder("N%" +space+ comma + "Article Number " + comma + "Name" + comma
-               +"Place"+comma + "Category" + comma + "Cost EURO" +space+ comma + "Cost SOM" + comma+ "Registration Date" +
-                comma + "Author" +comma+"ISBN"+ newLIne);
+        int index = 1;
+        StringBuilder fullData = new StringBuilder("N%" + space + comma + "Article Number " + comma + "Second Article N" + comma + "Name" + comma
+                + "Place" + comma + "Category" + comma + "Cost EURO" + space + comma + "Cost SOM" + comma + "Registration Date" +
+                comma + "Author" + comma + "ISBN" + comma + "Project" +comma+"Purchase Date"+comma+"Description"+ comma+"Author"+newLIne);
         for (Item item : data) {
-            fullData.append(index+comma);
-            fullData.append(item.getArticleNumber().replaceAll(comma,semiColon) + comma);
-            fullData.append(item.getName().replaceAll(comma,semiColon) + comma);
+            fullData.append(index + comma);
+            fullData.append(item.getArticleNumber().replaceAll(comma, semiColon) + comma);
+            fullData.append(item.getSecondArtikelNumber());
+            fullData.append(item.getName().replaceAll(comma, semiColon) + comma);
             fullData.append(item.getPlace() + comma);
             fullData.append(item.getCategory() + comma);
             fullData.append(item.getCost() + comma);
             fullData.append(item.getCostSom() + comma);
             fullData.append(item.getRegistrationDate() + comma);
-            if(item.getAuthor() == null) item.setAuthor("");
-            fullData.append(item.getAuthor().replaceAll(comma,semiColon) + comma);
+            if (item.getAuthor() == null) item.setAuthor("");
+            fullData.append(item.getAuthor().replaceAll(comma, semiColon) + comma);
             fullData.append(item.getIsbn() + comma);
+            fullData.append(item.getProject().getName()+comma);
+            fullData.append(item.getPurchaseDate()+comma);
+            fullData.append(item.getDescription()+comma);
+            fullData.append(item.getAuthor());
             fullData.append(newLIne);
             index++;
         }
